@@ -1,6 +1,6 @@
 # PC-Planner
 
-Welcome to PC-Planner, your go-to web app for planning your PC build with ease. This project allows users to select and organize PC components, ensuring compatibility and simplifying the process of building a custom PC.
+Welcome to PC-Planner, a web app for planning your PC build with ease. This project allows users to select and organize PC components, ensuring compatibility and simplifying the process of building a custom PC.
 
 
 ## About
