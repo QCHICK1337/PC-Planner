@@ -17,6 +17,7 @@
     "bootstrap-vue-next": "^0.15.5",
     "bootstrap.native": "^5.0.10",
     "core-js": "^3.8.3",
+    "firebase": "^10.6.0",
     "jquery": "^3.7.1",
     "popper.js": "^1.16.1",
     "vue": "^3.2.13"
