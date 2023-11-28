@@ -1,12 +1,9 @@
 <template>
-    <b-navbar toggleable="lg" type="light" variant="light">
-        <b-navbar-brand href="#">PC Planner</b-navbar-brand>
+    <b-navbar toggleable="lg" type="light" variant="light" class="navbar-with-padding">
+        <b-navbar-brand href="#"><font-awesome-icon icon="computer" /> PC Planner</b-navbar-brand>
         <b-navbar-toggle target="navbarNav"></b-navbar-toggle>
         <b-collapse id="navbarNav" is-nav>
             <b-navbar-nav>
-                <b-nav-item active>
-                    <b-nav-link href="#">Home</b-nav-link>
-                </b-nav-item>
                 <b-nav-item>
                     <b-nav-link href="#">Konfigurator</b-nav-link>
                 </b-nav-item>
@@ -36,5 +33,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styles here */
+.navbar-with-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+}
 </style>
