@@ -2,7 +2,7 @@
   <div id="app">
     <Navbar />
     <div class="content">
-      <!-- Your page content goes here -->
+      <Home />
     </div>
     <Footer />
   </div>
@@ -11,13 +11,15 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
+import Home from './components/Home.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
-  }
+    Footer,
+    Home
+}
 }
 </script>
 

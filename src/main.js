@@ -5,9 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faComputer } from '@fortawesome/free-solid-svg-icons'  
+import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faHeart)
+library.add(faComputer)
+library.add(faScrewdriverWrench)
 
 const app = createApp(App)
 
