@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "pc-planner-4a3d7"
-  }
+  },
+  "targets": {
+    "pc-planner-4a3d7": {
+      "hosting": {
+        "main": [
+          "pc-planner-projekt"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

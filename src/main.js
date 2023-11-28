@@ -13,6 +13,8 @@ library.add(faHeart)
 library.add(faComputer)
 library.add(faScrewdriverWrench)
 
+document.title = 'PC Planner'
+
 const app = createApp(App)
 
 app.use(BootstrapVue)
