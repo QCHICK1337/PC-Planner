@@ -2,7 +2,7 @@
   <div id="app">
     <Navbar />
     <div class="content">
-      <Home />
+      <router-view />
     </div>
     <Footer />
   </div>
@@ -11,14 +11,12 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
-import Home from './components/Home.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Footer,
-    Home
+    Footer
 }
 }
 </script>

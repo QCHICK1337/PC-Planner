@@ -3,7 +3,7 @@
         <div class="hero-content">
             <h1 class="display-4"><b>PC PLANNER</b></h1>
             <p class="lead">Skonfiguruj idealny komputer.</p>
-            <b-button variant="primary" size="lg"><font-awesome-icon icon="screwdriver-wrench" /> Rozpocznij konfigurację</b-button>
+            <b-button variant="primary" size="lg" @click="$router.push('/configurator')"><font-awesome-icon icon="screwdriver-wrench" /> Rozpocznij konfigurację</b-button>
         </div>
     </div>
 </template>
