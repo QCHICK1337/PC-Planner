@@ -6,7 +6,8 @@
                     <BCardText class="flex-grow-1">
                         {{ card.text }}
                     </BCardText>
-                    <BButton href="#" variant="primary" class="w-100 m-auto">Dodaj</BButton>
+                    <router-link v-if="card.id === 1" :to="card.link" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
+                    <router-link v-else to="#" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
                 </BCard>
             </div>
         </div>
@@ -14,12 +15,11 @@
 </template>
 
 <script>
-import { BCard, BButton, BCardText } from 'bootstrap-vue-next';
+import { BCard, BCardText } from 'bootstrap-vue-next';
 
 export default {
     components: {
         BCard,
-        BButton,
         BCardText,
     },
     data() {
@@ -29,6 +29,7 @@ export default {
                     id: 1,
                     title: 'Procesor',
                     text: 'Wybierz produkt',
+                    link: '/products/cpu',
                 },
                 {
                     id: 2,
@@ -73,4 +74,3 @@ export default {
   
 <style>
 </style>
-  
