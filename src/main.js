@@ -9,11 +9,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faComputer } from '@fortawesome/free-solid-svg-icons'  
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faHeart)
 library.add(faComputer)
 library.add(faScrewdriverWrench)
+library.add(faFilter)
 
 document.title = 'PC Planner'
 
