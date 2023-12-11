@@ -14,8 +14,8 @@
 
 <script>
 import { BTable, BButton } from 'bootstrap-vue-next';
-import { db } from '../firebase'; // import your Firestore instance
-import { collection, onSnapshot, query } from 'firebase/firestore'; // import Firestore functions
+import { db } from '../firebase'; 
+import { collection, onSnapshot, query } from 'firebase/firestore'; 
 
 export default {
     components: {
@@ -27,9 +27,9 @@ export default {
             products: [],
             search: '',
             fields: [
-                { key: 'name', sortable: true },
-                { key: 'corecount', sortable: true },
-                { key: 'price', sortable: true },
+                { key: 'name', sortable: true, label: 'Nazwa' },
+                { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
+                { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'actions', label: '' },
             ],
             sortBy: 'name',
