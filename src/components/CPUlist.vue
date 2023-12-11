@@ -5,8 +5,8 @@
             <template #cell(price)="data">
                 {{ data.item.price }}
             </template>
-            <template #cell(actions)>
-                <BButton variant="primary" class="ml-3">Dodaj</BButton>
+            <template #cell(actions)="data">
+                <BButton variant="primary" class="ml-3" @click="selectCpu(data.item)">Dodaj</BButton>
             </template>
         </BTable>
     </div>
@@ -14,13 +14,27 @@
 
 <script>
 import { BTable, BButton } from 'bootstrap-vue-next';
-import { db } from '../firebase'; 
-import { collection, onSnapshot, query } from 'firebase/firestore'; 
+import { db } from '../firebase';
+import { collection, onSnapshot, query } from 'firebase/firestore';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
     components: {
         BTable,
         BButton,
+    },
+    setup() {
+        const store = useStore();
+        const router = useRouter();
+        const selectCpu = (cpu) => {
+            store.commit('setSelectedCpu', cpu);
+            router.push('/configurator');
+        };
+
+        return {
+            selectCpu,
+        };
     },
     data() {
         return {
