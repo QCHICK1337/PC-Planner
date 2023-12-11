@@ -4,9 +4,10 @@
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
                     <BCardText class="flex-grow-1">
-                        {{ card.text }}
+                        {{ card.id === 1 && selectedCpu ? selectedCpu.name : card.text }}
                     </BCardText>
-                    <router-link v-if="card.id === 1" :to="card.link" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
+                    <router-link v-if="card.id === 1" :to="card.link"
+                        class="btn btn-primary w-100 m-auto">Dodaj</router-link>
                     <router-link v-else to="#" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
                 </BCard>
             </div>
@@ -15,12 +16,22 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 import { BCard, BCardText } from 'bootstrap-vue-next';
 
 export default {
     components: {
         BCard,
         BCardText,
+    },
+    setup() {
+        const store = useStore();
+        const selectedCpu = computed(() => store.state.selectedCpu);
+
+        return {
+            selectedCpu,
+        };
     },
     data() {
         return {
@@ -72,5 +83,4 @@ export default {
 };
 </script>
   
-<style>
-</style>
+<style></style>
