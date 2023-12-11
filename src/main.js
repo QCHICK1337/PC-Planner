@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import { BootstrapVue } from 'bootstrap-vue-next'
+import { BootstrapVueNext } from 'bootstrap-vue-next'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -18,7 +18,7 @@ document.title = 'PC Planner'
 
 const app = createApp(App)
 
-app.use(BootstrapVue)
+app.use(BootstrapVueNext)
 app.use(router)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
