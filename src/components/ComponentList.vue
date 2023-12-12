@@ -1,16 +1,16 @@
 <template>
-    <BCollapse v-model="localIsCollapsed" class="d-md-block">
-
-    </BCollapse>
-
-    <BTable :items="items" :fields="fields" v-model:sort-by="localSortBy" v-model:sort-desc="localSortDesc" responsive="sm"
-        :row-class="'align-items-center'">
-
-    </BTable>
+    <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
+        :per-page="perPage" :current-page="currentPage" @row-clicked="selectItem" responsive="md">
+        <template #cell(add)="data">
+            <b-button variant="primary" @click="addItem(data.item)">Dodaj</b-button>
+        </template>
+    </b-table>
 </template>
 
 <script>
 import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
     props: {
@@ -25,12 +25,19 @@ export default {
     emits: ['selectItem'],
 
     setup(props, { emit }) {
+        const store = useStore();
+        const router = useRouter();
         const localIsCollapsed = ref(props.isCollapsed);
         const localSortBy = ref(props.sortBy);
         const localSortDesc = ref(props.sortDesc);
 
         const selectItem = (item) => {
-            console.log(item); 
+            console.log(item);
+        };
+
+        const addItem = (item) => {
+            store.dispatch('selectCpu', item);
+            router.push('/configurator');
         };
 
         watch(localIsCollapsed, (newVal) => {
@@ -50,9 +57,10 @@ export default {
             localIsCollapsed,
             localSortBy,
             localSortDesc,
+            addItem
         };
 
-        
+
     },
 };
 </script>
