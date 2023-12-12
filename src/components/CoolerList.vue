@@ -1,7 +1,7 @@
 <template>
 <component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
     v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-    @select-item="selectCooler" :itemType="'cooler'" /> <!-- Add :itemType="'cooler'" -->
+    @select-item="selectCooler" :itemType="'cooler'" /> 
 </template>
 
 <script>

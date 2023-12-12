@@ -5,6 +5,8 @@ export default createStore({
   state: {
     selectedCpu: null,
     selectedCooler: null,
+    selectedMotherboard: null,
+    selectedRAM: null,
   },
   mutations: {
     setSelectedCpu(state, cpu) {
@@ -13,6 +15,12 @@ export default createStore({
     setSelectedCooler(state, cooler) {
       state.selectedCooler = cooler;
     },
+    setSelectedMotherboard(state, motherboard) {
+      state.selectedMotherboard = motherboard;
+    },
+    setSelectedRAM(state, ram) {
+      state.selectedRAM = ram;
+    },
   },
   actions: {
     selectCpu({ commit }, cpu) {
@@ -20,6 +28,12 @@ export default createStore({
     },
     selectCooler({ commit }, cooler) {
       commit('setSelectedCooler', cooler);
+    },
+    selectMotherboard({ commit }, motherboard) {
+      commit('setSelectedMotherboard', motherboard);
+    },
+    selectRAM({ commit }, ram) {
+      commit('setSelectedRAM', ram);
     },
   },
   plugins: [createPersistedState()],
