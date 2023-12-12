@@ -42,6 +42,12 @@ export default {
             } else if (props.itemType === 'cooler') {
                 store.dispatch('selectCooler', item);
             }
+            else if (props.itemType === 'motherboard') {
+                store.dispatch('selectMotherboard', item);
+            }
+            else if (props.itemType === 'ram') {
+                store.dispatch('selectRAM', item);
+            }
             router.push('/configurator');
         };
 
