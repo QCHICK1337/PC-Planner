@@ -49,6 +49,7 @@ export default {
                 { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'actions', label: '' },
+                { key: 'add', label: '' },
             ],
             filterCategories: [], // Define your filter categories here
         };
