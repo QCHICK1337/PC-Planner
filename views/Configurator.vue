@@ -4,11 +4,10 @@
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
                     <BCardText class="flex-grow-1">
-                        {{ card.id === 1 && selectedCpu ? selectedCpu.name : card.text }}
+                        {{ card.id === 1 ? (selectedCpu ? selectedCpu.name : card.text) : card.id === 2 ? (selectedCooler ?
+                            selectedCooler.name : card.text) : card.text }}
                     </BCardText>
-                    <router-link v-if="card.id === 1" :to="card.link"
-                        class="btn btn-primary w-100 m-auto">Dodaj</router-link>
-                    <router-link v-else to="#" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
+                    <router-link v-if="card.link" :to="card.link" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
                 </BCard>
             </div>
         </div>
@@ -26,13 +25,15 @@ export default {
         BCardText,
     },
     setup() {
-        const store = useStore();
-        const selectedCpu = computed(() => store.state.selectedCpu);
+    const store = useStore();
+    const selectedCpu = computed(() => store.state.selectedCpu);
+    const selectedCooler = computed(() => store.state.selectedCooler);
 
-        return {
-            selectedCpu,
-        };
-    },
+    return {
+        selectedCpu,
+        selectedCooler,
+    };
+},
     data() {
         return {
             cards: [
@@ -46,6 +47,7 @@ export default {
                     id: 2,
                     title: 'Chłodzenie',
                     text: 'Wybierz produkt',
+                    link: '/products/coolers',
                 },
                 {
                     id: 3,

@@ -2,21 +2,25 @@ import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
-    state: {
-        selectedCpu: null,
-        // Add other selected items here
+  state: {
+    selectedCpu: null,
+    selectedCooler: null,
+  },
+  mutations: {
+    setSelectedCpu(state, cpu) {
+      state.selectedCpu = cpu;
     },
-    mutations: {
-        setSelectedCpu(state, cpu) {
-            state.selectedCpu = cpu;
-        },
-        // Add other mutations here
+    setSelectedCooler(state, cooler) {
+      state.selectedCooler = cooler;
     },
-    actions: {
-        selectCpu({ commit }, cpu) {
-            commit('setSelectedCpu', cpu);
-        },
-        // Add other actions here
+  },
+  actions: {
+    selectCpu({ commit }, cpu) {
+      commit('setSelectedCpu', cpu);
     },
-    plugins: [createPersistedState()],
+    selectCooler({ commit }, cooler) {
+      commit('setSelectedCooler', cooler);
+    },
+  },
+  plugins: [createPersistedState()],
 });

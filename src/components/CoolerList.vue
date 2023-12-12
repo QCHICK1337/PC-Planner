@@ -1,12 +1,12 @@
 <template>
-    <component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
-        v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-        @select-item="selectCpu" :itemType="'cpu'" /> <!-- Add :itemType="'cpu'" -->
+<component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
+    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
+    @select-item="selectCooler" :itemType="'cooler'" /> <!-- Add :itemType="'cooler'" -->
 </template>
 
 <script>
-import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
+import { db } from '../firebase';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { reactive, onMounted } from 'vue';
@@ -21,36 +21,36 @@ export default {
         const router = useRouter();
         const state = reactive({
             products: [],
-            isCollapsed: false, // Define isCollapsed
-            sortBy: '', // Define sortBy
-            sortDesc: false, // Define sortDesc
+            isCollapsed: false,
+            sortBy: '',
+            sortDesc: false,
         });
-        const selectCpu = (cpu) => {
-            store.dispatch('selectCpu', cpu);
-            router.push({ name: 'Configurator', params: { cardId: 'cpus' } });
+        const selectCooler = (cooler) => {
+            store.dispatch('selectCooler', cooler);
+            router.push({ name: 'Configurator', params: { cardId: 'coolers' } });
         };
 
         onMounted(() => {
-            const q = query(collection(db, 'cpu'));
+            const q = query(collection(db, 'cooler'));
             onSnapshot(q, (snapshot) => {
                 state.products = snapshot.docs.map(doc => doc.data());
             });
         });
 
         return {
-            state, // Return state as an object
-            selectCpu,
+            state,
+            selectCooler,
         };
     },
     data() {
         return {
             fields: [
                 { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
+                { key: 'max-rpm', sortable: true, label: 'Max. Obroty' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'add', label: '' },
             ],
-            filterCategories: [], // Define your filter categories here
+            filterCategories: [],
         };
     },
 };
