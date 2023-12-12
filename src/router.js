@@ -5,6 +5,8 @@ import About from '/views/About.vue'
 import Products from '/views/Products.vue'
 import CPUList from './/components/CPUList.vue'
 import CoolerList from './/components/CoolerList.vue'
+import MotherboardList from './/components/MotherboardList.vue'
+import RAMList from './/components/RAMList.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -15,7 +17,9 @@ const routes = [
     component: Products,
     children: [
       {path: 'cpu', component: CPUList},
-      {path: 'coolers', component: CoolerList}
+      {path: 'coolers', component: CoolerList},
+      {path: 'motherboards', component: MotherboardList},
+      {path: 'ram', component: RAMList}
     ] 
   }
 ]

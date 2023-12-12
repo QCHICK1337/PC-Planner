@@ -5,7 +5,9 @@
                 <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
                     <BCardText class="flex-grow-1">
                         {{ card.id === 1 ? (selectedCpu ? selectedCpu.name : card.text) : card.id === 2 ? (selectedCooler ?
-                            selectedCooler.name : card.text) : card.text }}
+                            selectedCooler.name : card.text) : card.id === 3 ? (selectedMotherboard ?
+                                selectedMotherboard.name : card.text) : card.id === 4 ? (selectedRAM ?
+                                    selectedRAM.name : card.text) : card.text }}
                     </BCardText>
                     <router-link v-if="card.link" :to="card.link" class="btn btn-primary w-100 m-auto">Dodaj</router-link>
                 </BCard>
@@ -28,10 +30,14 @@ export default {
     const store = useStore();
     const selectedCpu = computed(() => store.state.selectedCpu);
     const selectedCooler = computed(() => store.state.selectedCooler);
+    const selectedMotherboard = computed(() => store.state.selectedMotherboard);
+    const selectedRAM = computed(() => store.state.selectedRAM);
 
     return {
         selectedCpu,
         selectedCooler,
+        selectedMotherboard,
+        selectedRAM,
     };
 },
     data() {
@@ -53,11 +59,13 @@ export default {
                     id: 3,
                     title: 'Płyta główna',
                     text: 'Wybierz produkt',
+                    link: '/products/motherboards',
                 },
                 {
                     id: 4,
                     title: 'Pamięć RAM',
                     text: 'Wybierz produkt',
+                    link: '/products/ram',
                 },
                 {
                     id: 5,

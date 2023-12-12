@@ -1,7 +1,7 @@
 <template>
     <component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
         v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-        @select-item="selectCpu" :itemType="'cpu'" /> 
+        @select-item="selectRAM" :itemType="'ram'" /> 
 </template>
 
 <script>
@@ -25,13 +25,13 @@ export default {
             sortBy: '', 
             sortDesc: false, 
         });
-        const selectCpu = (cpu) => {
-            store.dispatch('selectCpu', cpu);
-            router.push({ name: 'Configurator', params: { cardId: 'cpus' } });
+        const selectRAM = (ram) => {
+            store.dispatch('selectRAM', ram);
+            router.push({ name: 'Configurator', params: { cardId: 'ram' } });
         };
 
         onMounted(() => {
-            const q = query(collection(db, 'cpu'));
+            const q = query(collection(db, 'ram'));
             onSnapshot(q, (snapshot) => {
                 state.products = snapshot.docs.map(doc => doc.data());
             });
@@ -39,16 +39,13 @@ export default {
 
         return {
             state, 
-            selectCpu,
+            selectRAM,
         };
     },
     data() {
         return {
             fields: [
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
-                { key: 'price', sortable: true, label: 'Cena' },
-                { key: 'add', label: '' },
+                // Define the fields for RAM here
             ],
             filterCategories: [], 
         };
