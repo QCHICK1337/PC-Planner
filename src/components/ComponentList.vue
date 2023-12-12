@@ -1,6 +1,6 @@
 <template>
     <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
-        :per-page="perPage" :current-page="currentPage" @row-clicked="selectItem" responsive="md">
+        @row-clicked="selectItem" responsive="md">
         <template #cell(add)="data">
             <b-button variant="primary" @click="addItem(data.item)">Dodaj</b-button>
         </template>
@@ -20,6 +20,7 @@ export default {
         isCollapsed: Boolean,
         sortBy: String,
         sortDesc: Boolean,
+        itemType: String,
     },
 
     emits: ['selectItem'],
@@ -36,7 +37,11 @@ export default {
         };
 
         const addItem = (item) => {
-            store.dispatch('selectCpu', item);
+            if (props.itemType === 'cpu') {
+                store.dispatch('selectCpu', item);
+            } else if (props.itemType === 'cooler') {
+                store.dispatch('selectCooler', item);
+            }
             router.push('/configurator');
         };
 
