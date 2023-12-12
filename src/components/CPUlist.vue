@@ -1,93 +1,57 @@
 <template>
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-md-3">
-                <h3 class="d-none d-md-block">Filtry</h3>
-                <button @click="isCollapsed = !isCollapsed" class="btn btn-primary mb-1 d-md-none">
-                    <font-awesome-icon icon="filter" /> Filtry
-                </button>
-                <div class="filter-sidebar">
-                    <BCollapse v-model="isCollapsed" class="d-md-block">
-                        <h6>Test</h6>
-                    </BCollapse>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <BTable :items="filteredProducts" :fields="fields" v-model:sort-by="sortBy" v-model:sort-desc="sortDesc"
-                    responsive="sm" :row-class="'align-items-center'">
-                    <template #cell(price)="data">
-                        {{ data.item.price }}
-                    </template>
-                    <template #cell(actions)="data">
-                        <BButton variant="primary" class="ml-3" @click="selectCpu(data.item)">Dodaj</BButton>
-                    </template>
-                </BTable>
-            </div>
-        </div>
-    </div>
+    <component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
+        v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
+        @select-item="selectCpu" />
 </template>
-  
+
 <script>
-import { BTable, BButton, BCollapse } from 'bootstrap-vue-next';
 import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { reactive, onMounted } from 'vue';
+import ComponentList from './ComponentList.vue';
 
 export default {
     components: {
-        BTable,
-        BButton,
-        BCollapse,
+        ComponentList,
     },
     setup() {
         const store = useStore();
         const router = useRouter();
+        const state = reactive({
+            products: [],
+            isCollapsed: false, // Define isCollapsed
+            sortBy: '', // Define sortBy
+            sortDesc: false, // Define sortDesc
+        });
         const selectCpu = (cpu) => {
             store.commit('setSelectedCpu', cpu);
             router.push('/configurator');
         };
 
+        onMounted(() => {
+            const q = query(collection(db, 'cpu'));
+            onSnapshot(q, (snapshot) => {
+                state.products = snapshot.docs.map(doc => doc.data());
+            });
+        });
+
         return {
+            state, // Return state as an object
             selectCpu,
         };
     },
     data() {
         return {
-            products: [],
             fields: [
                 { key: 'name', sortable: true, label: 'Nazwa' },
                 { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'actions', label: '' },
             ],
-            sortBy: 'name',
-            sortDesc: false,
-            isCollapsed: false,
+            filterCategories: [], // Define your filter categories here
         };
-    },
-    created() {
-        const q = query(collection(db, 'cpu'));
-        onSnapshot(q, (snapshot) => {
-            this.products = snapshot.docs.map(doc => doc.data());
-        });
-    },
-    computed: {
-        filteredProducts() {
-            return this.products;
-        },
     },
 };
 </script>
-  
-<style scoped>
-.filter-sidebar {
-    margin-bottom: 1rem;
-}
-
-@media (min-width: 768px) {
-    .d-md-none {
-        display: none;
-    }
-}
-</style>
