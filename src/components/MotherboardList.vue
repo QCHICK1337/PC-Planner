@@ -1,7 +1,7 @@
 <template>
     <component-list :items="state.products" :fields="fields" :filter-categories="filterCategories"
         v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-        @select-item="selectMotherboard" :itemType="'motherboard'" /> 
+        @select-item="selectMotherboard" :itemType="'motherboard'" />
 </template>
 
 <script>
@@ -21,9 +21,9 @@ export default {
         const router = useRouter();
         const state = reactive({
             products: [],
-            isCollapsed: false, 
-            sortBy: '', 
-            sortDesc: false, 
+            isCollapsed: false,
+            sortBy: '',
+            sortDesc: false,
         });
         const selectMotherboard = (motherboard) => {
             store.dispatch('selectMotherboard', motherboard);
@@ -38,16 +38,19 @@ export default {
         });
 
         return {
-            state, 
+            state,
             selectMotherboard,
         };
     },
     data() {
         return {
             fields: [
-                // Define the fields for your motherboards here
+                { key: 'name', sortable: true, label: 'Nazwa' },
+                { key: 'socket', sortable: true, label: 'Socket' },
+                { key: 'price', sortable: true, label: 'Cena' },
+                { key: 'add', label: '' },
             ],
-            filterCategories: [], 
+            filterCategories: [],
         };
     },
 };

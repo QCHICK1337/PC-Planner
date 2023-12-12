@@ -45,7 +45,11 @@ export default {
     data() {
         return {
             fields: [
-                // Define the fields for RAM here
+                { key: 'name', sortable: true, label: 'Nazwa' },
+                { key: 'type', sortable: true, label: 'Typ pamięci' },
+                { key: 'total-memory', sortable: true, label: 'Pojemność łączna'},
+                { key: 'price', sortable: true, label: 'Cena' },
+                { key: 'add', label: '' },
             ],
             filterCategories: [], 
         };
