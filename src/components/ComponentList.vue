@@ -1,6 +1,9 @@
 <template>
     <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
         @row-clicked="selectItem" responsive="md">
+        <template #cell(image)="data">
+            <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
+        </template>
         <template #cell(add)="data">
             <b-button variant="primary" @click="addItem(data.item)">Dodaj</b-button>
         </template>
@@ -87,3 +90,11 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.my-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+</style>

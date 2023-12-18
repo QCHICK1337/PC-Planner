@@ -3,8 +3,10 @@
         <div class="row">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
-                    <BCardText class="flex-grow-1">
-                        {{ getSelectedName(card.id) }}
+                    <BCardText class="flex-grow-1 d-flex flex-column align-items-center">
+                        <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
+                            alt="Component Image" class="component-image mb-2">
+                        {{ getSelectedData(card.id).name }}
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
@@ -70,17 +72,17 @@ export default {
             }
         };
 
-        const getSelectedName = (id) => {
+        const getSelectedData = (id) => {
             switch (id) {
-                case 1: return selectedCpu.value ? selectedCpu.value.name : '';
-                case 2: return selectedCooler.value ? selectedCooler.value.name : '';
-                case 3: return selectedMotherboard.value ? selectedMotherboard.value.name : '';
-                case 4: return selectedRAM.value ? selectedRAM.value.name : '';
-                case 5: return selectedStorage.value ? selectedStorage.value.name : '';
-                case 6: return selectedGPU.value ? selectedGPU.value.name : '';
-                case 7: return selectedCase.value ? selectedCase.value.name : '';
-                case 8: return selectedPSU.value ? selectedPSU.value.name : '';
-                default: return '';
+                case 1: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image } : { name: '', image: '' };
+                case 2: return selectedCooler.value ? { name: selectedCooler.value.name, image: selectedCooler.value.image } : { name: '', image: '' };
+                case 3: return selectedMotherboard.value ? { name: selectedMotherboard.value.name, image: selectedMotherboard.value.image } : { name: '', image: '' };
+                case 4: return selectedRAM.value ? { name: selectedRAM.value.name, image: selectedRAM.value.image } : { name: '', image: '' };
+                case 5: return selectedStorage.value ? { name: selectedStorage.value.name, image: selectedStorage.value.image } : { name: '', image: '' };
+                case 6: return selectedGPU.value ? { name: selectedGPU.value.name, image: selectedGPU.value.image } : { name: '', image: '' };
+                case 7: return selectedCase.value ? { name: selectedCase.value.name, image: selectedCase.value.image } : { name: '', image: '' };
+                case 8: return selectedPSU.value ? { name: selectedPSU.value.name, image: selectedPSU.value.image } : { name: '', image: '' };
+                default: return { name: '', image: '' };
             }
         };
 
@@ -154,8 +156,16 @@ export default {
             cards,
             addCard,
             removeCard,
-            getSelectedName
+            getSelectedData
         };
     },
 };
 </script>
+
+<style scoped>
+.component-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+</style>
