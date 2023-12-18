@@ -48,6 +48,18 @@ export default {
             else if (props.itemType === 'ram') {
                 store.dispatch('selectRAM', item);
             }
+            else if (props.itemType === 'storage') {
+                store.dispatch('selectStorage', item);
+            }
+            else if (props.itemType === 'gpu') {
+                store.dispatch('selectGPU', item);
+            }
+            else if (props.itemType === 'case') {
+                store.dispatch('selectCase', item);
+            }
+            else if (props.itemType === 'psu') {
+                store.dispatch('selectPSU', item);
+            }
             router.push('/configurator');
         };
 

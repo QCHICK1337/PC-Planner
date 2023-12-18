@@ -7,6 +7,10 @@ import CPUList from './/components/CPUList.vue'
 import CoolerList from './/components/CoolerList.vue'
 import MotherboardList from './/components/MotherboardList.vue'
 import RAMList from './/components/RAMList.vue'
+import StorageList from './/components/StorageList.vue'
+import GPUList from './/components/GPUList.vue'
+import CaseList from './/components/CaseList.vue'
+import PSUList from './/components/PSUList.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -19,7 +23,11 @@ const routes = [
       {path: 'cpu', component: CPUList},
       {path: 'coolers', component: CoolerList},
       {path: 'motherboards', component: MotherboardList},
-      {path: 'ram', component: RAMList}
+      {path: 'ram', component: RAMList},
+      {path: 'storage', component: StorageList},
+      {path: 'gpu', component: GPUList},
+      {path: 'cases', component: CaseList},
+      {path: 'psu', component: PSUList}
     ] 
   }
 ]

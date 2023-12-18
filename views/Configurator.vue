@@ -38,6 +38,10 @@ export default {
         const selectedCooler = computed(() => store.state.selectedCooler);
         const selectedMotherboard = computed(() => store.state.selectedMotherboard);
         const selectedRAM = computed(() => store.state.selectedRAM);
+        const selectedStorage = computed(() => store.state.selectedStorage);
+        const selectedGPU = computed(() => store.state.selectedGPU);
+        const selectedCase = computed(() => store.state.selectedCase);
+        const selectedPSU = computed(() => store.state.selectedPSU);
 
         const isSelected = (id) => {
             switch (id) {
@@ -45,6 +49,10 @@ export default {
                 case 2: return selectedCooler.value !== null;
                 case 3: return selectedMotherboard.value !== null;
                 case 4: return selectedRAM.value !== null;
+                case 5: return selectedStorage.value !== null;
+                case 6: return selectedGPU.value !== null;
+                case 7: return selectedCase.value !== null;
+                case 8: return selectedPSU.value !== null;
                 default: return false;
             }
         };
@@ -55,6 +63,10 @@ export default {
                 case 2: store.dispatch('selectCooler', null); break;
                 case 3: store.dispatch('selectMotherboard', null); break;
                 case 4: store.dispatch('selectRAM', null); break;
+                case 5: store.dispatch('selectStorage', null); break;
+                case 6: store.dispatch('selectGPU', null); break;
+                case 7: store.dispatch('selectCase', null); break;
+                case 8: store.dispatch('selectPSU', null); break;
             }
         };
 
@@ -64,6 +76,10 @@ export default {
                 case 2: return selectedCooler.value ? selectedCooler.value.name : '';
                 case 3: return selectedMotherboard.value ? selectedMotherboard.value.name : '';
                 case 4: return selectedRAM.value ? selectedRAM.value.name : '';
+                case 5: return selectedStorage.value ? selectedStorage.value.name : '';
+                case 6: return selectedGPU.value ? selectedGPU.value.name : '';
+                case 7: return selectedCase.value ? selectedCase.value.name : '';
+                case 8: return selectedPSU.value ? selectedPSU.value.name : '';
                 default: return '';
             }
         };
@@ -97,21 +113,26 @@ export default {
                 id: 5,
                 title: 'Dysk twardy',
                 text: 'Wybierz produkt',
+                link: '/products/storage',
             },
             {
                 id: 6,
                 title: 'Karta graficzna',
                 text: 'Wybierz produkt',
+                link: '/products/gpu',
             },
             {
                 id: 7,
                 title: 'Obudowa',
                 text: 'Wybierz produkt',
+                link: '/products/cases',
+
             },
             {
                 id: 8,
                 title: 'Zasilacz',
                 text: 'Wybierz produkt',
+                link: '/products/psu',
             },
         ]);
         const addCard = (card) => {
@@ -127,6 +148,7 @@ export default {
             selectedCooler,
             selectedMotherboard,
             selectedRAM,
+            selectedStorage,
             isSelected,
             removeSelection,
             cards,
