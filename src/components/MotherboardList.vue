@@ -45,6 +45,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
                 { key: 'socket', sortable: true, label: 'Socket' },
                 { key: 'price', sortable: true, label: 'Cena' },
