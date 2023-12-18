@@ -45,6 +45,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
                 { key: 'max-rpm', sortable: true, label: 'Max. Obroty' },
                 { key: 'price', sortable: true, label: 'Cena' },

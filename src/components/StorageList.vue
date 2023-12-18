@@ -46,6 +46,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
                 { key: 'capacity', sortable: true, label: 'Pojemność' },
                 { key: 'price', sortable: true, label: 'Cena' },

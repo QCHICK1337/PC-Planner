@@ -45,6 +45,7 @@ export default {
     data() {
         return {
             fields: [
+                { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
                 { key: 'type', sortable: true, label: 'Typ pamięci' },
                 { key: 'total-memory', sortable: true, label: 'Pojemność łączna'},
