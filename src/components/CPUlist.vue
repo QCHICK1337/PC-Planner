@@ -47,6 +47,7 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
+                label: 'Producent',
                 options: [],
                 selectedOptions: [],
             },
