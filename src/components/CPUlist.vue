@@ -6,8 +6,8 @@
             </b-col>
             <b-col cols="12" md="10">
                 <component-list :items="filteredProducts" :fields="fields" :filter-categories="filterCategories"
-                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy"
-                    v-model:sort-desc="state.sortDesc" @select-item="selectCpu" :itemType="'cpu'" />
+                    v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc" @select-item="selectCpu"
+                    :itemType="'cpu'" />
             </b-col>
         </b-row>
     </b-container>
@@ -32,7 +32,6 @@ export default {
         const router = useRouter();
         const state = reactive({
             products: [],
-            isCollapsed: false,
             sortBy: '',
             sortDesc: false,
             manufacturers: [],
