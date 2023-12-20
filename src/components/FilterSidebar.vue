@@ -1,31 +1,36 @@
 <template>
-    <b-sidebar id="filter-sidebar" title="Filters">
-      <div v-for="(filter, index) in filters" :key="index">
-        <h5>{{ filter.name }}</h5>
-        <b-form-checkbox-group v-model="filter.selectedOptions" stacked>
-          <b-form-checkbox v-for="(option, optionIndex) in filter.options" :key="optionIndex" :value="option">
-            {{ option }}
-          </b-form-checkbox>
-        </b-form-checkbox-group>
-      </div>
-    </b-sidebar>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      filters: {
-        type: Array,
-        required: true,
-      },
+  <div>
+    <h4>Filtry</h4>
+    <b-form-group v-for="filter in filters" :key="filter.name">
+      <template #label>
+        <h6>{{ filter.name }}</h6>
+      </template>
+      <b-form-checkbox-group v-model="filter.selectedOptions">
+        <b-form-checkbox v-for="option in filter.options" :key="option" :value="option">
+          {{ option }}
+        </b-form-checkbox>
+      </b-form-checkbox-group>
+    </b-form-group>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    filters: {
+      type: Array,
+      required: true,
     },
-    watch: {
-      filters: {
-        handler() {
-          this.$emit('filter-change', this.filters);
-        },
-        deep: true,
+  },
+  watch: {
+    filters: {
+      handler(newVal) {
+        newVal.forEach(filter => {
+          this.$emit('filter-change', filter.name, filter.selectedOptions);
+        });
       },
+      deep: true,
     },
-  };
-  </script>
+  },
+};
+</script>

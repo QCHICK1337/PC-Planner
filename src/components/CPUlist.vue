@@ -4,10 +4,10 @@
             <b-col cols="12" md="2">
                 <filter-sidebar :filters="filters" @filter-change="applyFilters" />
             </b-col>
-            <b-col cols="12" md="8">
+            <b-col cols="12" md="10">
                 <component-list :items="filteredProducts" :fields="fields" :filter-categories="filterCategories"
-                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-                    @select-item="selectCpu" :itemType="'cpu'" />
+                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy"
+                    v-model:sort-desc="state.sortDesc" @select-item="selectCpu" :itemType="'cpu'" />
             </b-col>
         </b-row>
     </b-container>
@@ -18,7 +18,7 @@ import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { reactive, onMounted, computed } from 'vue';
+import { reactive, onMounted, computed, ref, watchEffect } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
 
@@ -42,31 +42,61 @@ export default {
             router.push({ name: 'Configurator', params: { cardId: 'cpus' } });
         };
 
+        const selectedManufacturers = ref([]);
+
+        const filters = reactive([
+            {
+                name: 'Manufacturer',
+                options: [],
+                selectedOptions: [],
+            },
+        ]);
+
         onMounted(() => {
             const q = query(collection(db, 'cpu'));
             onSnapshot(q, (snapshot) => {
                 state.products = snapshot.docs.map(doc => doc.data());
-                state.manufacturers = [...new Set(state.products.map(product => product.manufacturer))];
+
+                filters.forEach(filter => {
+                    const productProperty = filter.name.toLowerCase();
+                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    filter.options = uniqueValues;
+                    filter.selectedOptions = uniqueValues;
+                });
             });
         });
 
-        const filters = computed(() => [
-            {
-                name: 'Manufacturer',
-                options: state.manufacturers,
-                selectedOptions: state.manufacturers,
-            },
-        ]);
+        watchEffect(() => {
+            filters.value = [
+                {
+                    name: 'Manufacturer',
+                    options: state.manufacturers,
+                    selectedOptions: selectedManufacturers.value,
+                },
+            ];
+        });
 
         const filteredProducts = computed(() => {
-            return state.products;
+            return state.products.filter(product => {
+                return filters.every(filter => {
+                    return filter.selectedOptions.includes(product[filter.name.toLowerCase()]);
+                });
+            });
         });
+
+        const applyFilters = (filterName, selectedOptions) => {
+            const filter = filters.find(filter => filter.name === filterName);
+            if (filter) {
+                filter.selectedOptions = selectedOptions;
+            }
+        };
 
         return {
             state,
             selectCpu,
             filters,
             filteredProducts,
+            applyFilters,
         };
     },
     data() {
