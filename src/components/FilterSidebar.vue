@@ -1,11 +1,11 @@
 <template>
   <div>
     <h4>Filtry</h4>
-    <b-form-group v-for="filter in filters" :key="filter.name">
+    <b-form-group :label="filter.label" v-for="filter in filters" :key="filter.name">
       <template #label>
-        <h6>{{ filter.name }}</h6>
+        <h6>{{ filter.label }}</h6>
       </template>
-      <b-form-checkbox-group v-model="filter.selectedOptions">
+      <b-form-checkbox-group v-model="filter.selectedOptions" stacked>
         <b-form-checkbox v-for="option in filter.options" :key="option" :value="option">
           {{ option }}
         </b-form-checkbox>
