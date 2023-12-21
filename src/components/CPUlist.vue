@@ -42,11 +42,18 @@ export default {
         };
 
         const selectedManufacturers = ref([]);
+        const selectedSockets = ref([]);
 
         const filters = reactive([
             {
                 name: 'Manufacturer',
                 label: 'Producent',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Socket',
+                label: 'Socket',
                 options: [],
                 selectedOptions: [],
             },
@@ -72,6 +79,11 @@ export default {
                     name: 'Manufacturer',
                     options: state.manufacturers,
                     selectedOptions: selectedManufacturers.value,
+                },
+                {
+                    name: 'Socket',
+                    options: state.sockets,
+                    selectedOptions: selectedSockets.value,
                 },
             ];
         });
