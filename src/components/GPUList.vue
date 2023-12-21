@@ -18,7 +18,7 @@ import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { reactive, onMounted, computed } from 'vue'; // Import 'computed'
+import { reactive, onMounted, computed } from 'vue'; 
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
 
@@ -64,13 +64,19 @@ export default {
             });
         });
 
-        const applyFilters = () => {
-            // Implement your filtering logic here
+        const applyFilters = (filterName, selectedOptions) => {
+            const filter = filters.find(filter => filter.name === filterName);
+            if (filter) {
+                filter.selectedOptions = selectedOptions;
+            }
         };
 
         const filteredProducts = computed(() => {
-            // Return the filtered products here
-            return state.products; // Placeholder
+            return state.products.filter(product => {
+                return filters.every(filter => {
+                    return filter.selectedOptions.includes(product[filter.name.toLowerCase()]);
+                });
+            });
         });
 
         return {
