@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h4>Filtry</h4>
-    <b-button v-b-toggle="'collapse-filters'" class="mb-2" v-show="!isDesktop">Toggle Filters</b-button>
-    <b-collapse id="collapse-filters" v-model="isDesktop">
+    <h4 v-show="isDesktop">Filtry</h4>
+    <b-button v-b-toggle="'collapse-filters'" class="mb-2" variant="primary" v-show="!isDesktop"><font-awesome-icon icon="filter" /> Filtry</b-button>
+    <b-collapse id="collapse-filters" v-model="isCollapseVisible">
       <b-form-group :label="filter.label" v-for="filter in filters" :key="filter.name">
         <template #label>
           <h6>{{ filter.label }}</h6>
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       isDesktop: window.innerWidth >= 768,
+      isCollapseVisible: window.innerWidth >= 768,
     };
   },
   created() {
@@ -38,7 +39,9 @@ export default {
   },
   methods: {
     updateIsDesktop() {
-      this.isDesktop = window.innerWidth >= 768;
+      const isDesktopNow = window.innerWidth >= 768;
+      this.isDesktop = isDesktopNow;
+      this.isCollapseVisible = isDesktopNow;
     },
   },
   watch: {
