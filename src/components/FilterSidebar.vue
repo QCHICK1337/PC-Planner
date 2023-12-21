@@ -5,7 +5,7 @@
     <b-collapse id="collapse-filters" v-model="isCollapseVisible">
       <b-form-group :label="filter.label" v-for="filter in filters" :key="filter.name">
         <template #label>
-          <h6>{{ filter.label }}</h6>
+          <h6 class="mt-3 mb-1">{{ filter.label }}</h6>
         </template>
         <b-form-checkbox-group v-model="filter.selectedOptions" stacked>
           <b-form-checkbox v-for="option in filter.options" :key="option" :value="option">
