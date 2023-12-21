@@ -1,5 +1,8 @@
 <template>
     <div class="container mt-4">
+        <div v-if="!isCompatible" class="alert alert-danger">
+            Wybrany procesor i płyta główna nie są ze sobą kompatybilne. (Socket)
+        </div>
         <div class="row">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
@@ -58,6 +61,14 @@ export default {
                 default: return false;
             }
         };
+
+        const isCompatible = computed(() => {
+            if (selectedCpu.value && selectedMotherboard.value) {
+                const compatible = selectedCpu.value.socket === selectedMotherboard.value.socket;
+                return compatible;
+            }
+            return true;
+        });
 
         const removeSelection = (id) => {
             switch (id) {
@@ -152,6 +163,7 @@ export default {
             selectedRAM,
             selectedStorage,
             isSelected,
+            isCompatible,
             removeSelection,
             cards,
             addCard,
