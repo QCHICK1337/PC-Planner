@@ -3,13 +3,14 @@
         <div v-if="!isCompatible" class="alert alert-danger">
             Wybrany procesor i płyta główna nie są ze sobą kompatybilne. (Socket)
         </div>
-        <div class="row">
+        <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
-                <BCard :header="card.title" class="d-flex flex-column" style="max-width: 30rem; margin: 0 auto;">
+                <BCard :header="card.title" class="d-flex flex-column flex-grow-1" style="max-width: 30rem; margin: 0 auto;">
                     <BCardText class="flex-grow-1 d-flex flex-column align-items-center">
                         <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
                             alt="Component Image" class="component-image mb-2">
                         {{ getSelectedData(card.id).name }}
+                        <small class="text-muted">{{ getSelectedData(card.id).price }}</small>
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
@@ -22,6 +23,11 @@
                         <button class="btn btn-primary w-100">Dodaj</button>
                     </div>
                 </BCard>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-12 text-center">
+                <h4>Łącznie: <span class="text-muted">{{ totalPrice }}</span></h4>
             </div>
         </div>
     </div>
@@ -70,6 +76,25 @@ export default {
             return true;
         });
 
+        const parsePrice = (price) => {
+            if (!price) return 0;
+            const number = price.replace(' zł', '').replace(' ', '').replace(',', '.');
+            return parseFloat(number);
+        };
+
+        const totalPrice = computed(() => {
+            let total = 0;
+            if (selectedCpu.value) total += parsePrice(selectedCpu.value.price);
+            if (selectedCooler.value) total += parsePrice(selectedCooler.value.price);
+            if (selectedMotherboard.value) total += parsePrice(selectedMotherboard.value.price);
+            if (selectedRAM.value) total += parsePrice(selectedRAM.value.price);
+            if (selectedStorage.value) total += parsePrice(selectedStorage.value.price);
+            if (selectedGPU.value) total += parsePrice(selectedGPU.value.price);
+            if (selectedCase.value) total += parsePrice(selectedCase.value.price);
+            if (selectedPSU.value) total += parsePrice(selectedPSU.value.price);
+            return total.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
+        });
+
         const removeSelection = (id) => {
             switch (id) {
                 case 1: store.dispatch('selectCpu', null); break;
@@ -85,15 +110,15 @@ export default {
 
         const getSelectedData = (id) => {
             switch (id) {
-                case 1: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image } : { name: '', image: '' };
-                case 2: return selectedCooler.value ? { name: selectedCooler.value.name, image: selectedCooler.value.image } : { name: '', image: '' };
-                case 3: return selectedMotherboard.value ? { name: selectedMotherboard.value.name, image: selectedMotherboard.value.image } : { name: '', image: '' };
-                case 4: return selectedRAM.value ? { name: selectedRAM.value.name, image: selectedRAM.value.image } : { name: '', image: '' };
-                case 5: return selectedStorage.value ? { name: selectedStorage.value.name, image: selectedStorage.value.image } : { name: '', image: '' };
-                case 6: return selectedGPU.value ? { name: selectedGPU.value.name, image: selectedGPU.value.image } : { name: '', image: '' };
-                case 7: return selectedCase.value ? { name: selectedCase.value.name, image: selectedCase.value.image } : { name: '', image: '' };
-                case 8: return selectedPSU.value ? { name: selectedPSU.value.name, image: selectedPSU.value.image } : { name: '', image: '' };
-                default: return { name: '', image: '' };
+                case 1: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image, price: selectedCpu.value.price } : { name: '', image: '', price: '' };
+                case 2: return selectedCooler.value ? { name: selectedCooler.value.name, image: selectedCooler.value.image, price: selectedCooler.value.price } : { name: '', image: '', price: '' };
+                case 3: return selectedMotherboard.value ? { name: selectedMotherboard.value.name, image: selectedMotherboard.value.image, price: selectedMotherboard.value.price } : { name: '', image: '', price: '' };
+                case 4: return selectedRAM.value ? { name: selectedRAM.value.name, image: selectedRAM.value.image, price: selectedRAM.value.price } : { name: '', image: '', price: '' };
+                case 5: return selectedStorage.value ? { name: selectedStorage.value.name, image: selectedStorage.value.image, price: selectedStorage.value.price } : { name: '', image: '', price: '' };
+                case 6: return selectedGPU.value ? { name: selectedGPU.value.name, image: selectedGPU.value.image, price: selectedGPU.value.price } : { name: '', image: '', price: '' };
+                case 7: return selectedCase.value ? { name: selectedCase.value.name, image: selectedCase.value.image, price: selectedCase.value.price } : { name: '', image: '', price: '' };
+                case 8: return selectedPSU.value ? { name: selectedPSU.value.name, image: selectedPSU.value.image, price: selectedPSU.value.price } : { name: '', image: '', price: '' };
+                default: return { name: '', image: '', price: '' };
             }
         };
 
@@ -164,6 +189,7 @@ export default {
             selectedStorage,
             isSelected,
             isCompatible,
+            totalPrice,
             removeSelection,
             cards,
             addCard,
