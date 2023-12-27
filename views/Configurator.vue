@@ -1,5 +1,8 @@
 <template>
     <div class="container mt-4">
+        <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
+            {{ error }}
+        </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column flex-grow-1"
@@ -14,8 +17,8 @@
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
                     </div>
                     <div v-else-if="isSelected(card.id) && card.link" class="w-100 m-auto d-flex">
-                        <router-link :to="card.link" class="btn btn-primary w-50">Zmień</router-link>
-                        <button @click="removeSelection(card.id)" class="btn btn-danger w-50">Usuń</button>
+                        <router-link :to="card.link" class="btn btn-primary w-50 no-wrap">Zmień</router-link>
+                        <button @click="removeSelection(card.id)" class="btn btn-danger w-50 no-wrap">Usuń</button>
                     </div>
                     <div v-else class="w-100 m-auto">
                         <button class="btn btn-primary w-100">Dodaj</button>
@@ -27,9 +30,6 @@
             <div class="col-12 text-center">
                 <h4>Łącznie: <span class="text-muted">{{ totalPrice }}</span></h4>
             </div>
-        </div>
-        <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
-            {{ error }}
         </div>
     </div>
 </template>
@@ -216,5 +216,9 @@ export default {
     width: 50px;
     height: 50px;
     object-fit: cover;
+}
+
+.no-wrap {
+    white-space: nowrap;
 }
 </style>
