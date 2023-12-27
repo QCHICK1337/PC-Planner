@@ -1,11 +1,9 @@
 <template>
     <div class="container mt-4">
-        <div v-if="!isCompatible" class="alert alert-danger">
-            Wybrany procesor i płyta główna nie są ze sobą kompatybilne. (Socket)
-        </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
-                <BCard :header="card.title" class="d-flex flex-column flex-grow-1" style="max-width: 30rem; margin: 0 auto;">
+                <BCard :header="card.title" class="d-flex flex-column flex-grow-1"
+                    style="max-width: 30rem; margin: 0 auto;">
                     <BCardText class="flex-grow-1 d-flex flex-column align-items-center">
                         <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
                             alt="Component Image" class="component-image mb-2">
@@ -29,6 +27,9 @@
             <div class="col-12 text-center">
                 <h4>Łącznie: <span class="text-muted">{{ totalPrice }}</span></h4>
             </div>
+        </div>
+        <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
+            {{ error }}
         </div>
     </div>
 </template>
@@ -69,11 +70,21 @@ export default {
         };
 
         const isCompatible = computed(() => {
+            let errors = [];
+
             if (selectedCpu.value && selectedMotherboard.value) {
-                const compatible = selectedCpu.value.socket === selectedMotherboard.value.socket;
-                return compatible;
+                if (selectedCpu.value.socket !== selectedMotherboard.value.socket) {
+                    errors.push('Wybrany procesor i płyta główna nie są ze sobą kompatybilne. (Socket)');
+                }
             }
-            return true;
+
+            if (selectedRAM.value && selectedMotherboard.value) {
+                if (selectedRAM.value.type !== selectedMotherboard.value['memory-type']) {
+                    errors.push('Wybrana pamięć RAM i płyta główna nie są ze sobą kompatybilne. (Typ RAM)');
+                }
+            }
+
+            return errors;
         });
 
         const parsePrice = (price) => {
