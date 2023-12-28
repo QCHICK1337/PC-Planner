@@ -6,6 +6,12 @@
                 <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
             </router-link>
         </template>
+        <template #cell(name)="data">
+            <router-link class="product-name"
+                :to="{ name: 'ProductDetails', params: { collection: itemType, name: data.item.name } }">
+                {{ data.item.name }}
+            </router-link>
+        </template>
         <template #cell(add)="data">
             <b-button variant="primary" @click.stop="addItem(data.item)">Dodaj</b-button>
         </template>
@@ -98,5 +104,14 @@ export default {
     width: 50px;
     height: 50px;
     object-fit: cover;
+}
+
+.product-name {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-name:hover {
+    color: rgb(95, 95, 255);
 }
 </style>
