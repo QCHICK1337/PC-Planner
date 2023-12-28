@@ -2,10 +2,12 @@
     <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
         @row-clicked="selectItem" responsive="md">
         <template #cell(image)="data">
-            <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
+            <router-link :to="{ name: 'ProductDetails', params: { collection: itemType, name: data.item.name } }">
+                <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
+            </router-link>
         </template>
         <template #cell(add)="data">
-            <b-button variant="primary" @click="addItem(data.item)">Dodaj</b-button>
+            <b-button variant="primary" @click.stop="addItem(data.item)">Dodaj</b-button>
         </template>
     </b-table>
 </template>
