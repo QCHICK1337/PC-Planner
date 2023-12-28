@@ -11,6 +11,7 @@ import StorageList from './/components/StorageList.vue'
 import GPUList from './/components/GPUList.vue'
 import CaseList from './/components/CaseList.vue'
 import PSUList from './/components/PSUList.vue'
+import ProductDetails from './/components/ProductDetails.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -29,7 +30,8 @@ const routes = [
       {path: 'cases', component: CaseList},
       {path: 'psu', component: PSUList}
     ] 
-  }
+  },
+  { path: '/product/:collection/:name', name: 'ProductDetails', component: ProductDetails },
 ]
 
 const router = createRouter({
