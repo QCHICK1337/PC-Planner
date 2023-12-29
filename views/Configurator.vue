@@ -11,7 +11,7 @@
                         <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
                             alt="Component Image" class="component-image mb-2">
                         {{ getSelectedData(card.id).name }}
-                        <small class="text-muted">{{ getSelectedData(card.id).price }}</small>
+                        <small class="text-muted">{{ formatPrice(getSelectedData(card.id).price) }}</small>
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
@@ -87,24 +87,22 @@ export default {
             return errors;
         });
 
-        const parsePrice = (price) => {
-            if (!price) return 0;
-            const number = price.replace(' zł', '').replace(' ', '').replace(',', '.');
-            return parseFloat(number);
-        };
-
         const totalPrice = computed(() => {
             let total = 0;
-            if (selectedCpu.value) total += parsePrice(selectedCpu.value.price);
-            if (selectedCooler.value) total += parsePrice(selectedCooler.value.price);
-            if (selectedMotherboard.value) total += parsePrice(selectedMotherboard.value.price);
-            if (selectedRAM.value) total += parsePrice(selectedRAM.value.price);
-            if (selectedStorage.value) total += parsePrice(selectedStorage.value.price);
-            if (selectedGPU.value) total += parsePrice(selectedGPU.value.price);
-            if (selectedCase.value) total += parsePrice(selectedCase.value.price);
-            if (selectedPSU.value) total += parsePrice(selectedPSU.value.price);
+            if (selectedCpu.value) total += selectedCpu.value.price;
+            if (selectedCooler.value) total += selectedCooler.value.price;
+            if (selectedMotherboard.value) total += selectedMotherboard.value.price;
+            if (selectedRAM.value) total += selectedRAM.value.price;
+            if (selectedStorage.value) total += selectedStorage.value.price;
+            if (selectedGPU.value) total += selectedGPU.value.price;
+            if (selectedCase.value) total += selectedCase.value.price;
+            if (selectedPSU.value) total += selectedPSU.value.price;
             return total.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
         });
+
+        const formatPrice = (price) => {
+            return price ? price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł' : '';
+        };
 
         const removeSelection = (id) => {
             switch (id) {
@@ -201,6 +199,7 @@ export default {
             isSelected,
             isCompatible,
             totalPrice,
+            formatPrice,
             removeSelection,
             cards,
             addCard,

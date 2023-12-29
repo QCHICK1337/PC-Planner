@@ -12,6 +12,9 @@
                 {{ data.item.name }}
             </router-link>
         </template>
+        <template #cell(price)="data">
+            {{ formatPrice(data.item.price) }}
+        </template>
         <template #cell(add)="data">
             <b-button variant="primary" @click.stop="addItem(data.item)">Dodaj</b-button>
         </template>
@@ -74,6 +77,10 @@ export default {
             router.push('/configurator');
         };
 
+        const formatPrice = (price) => {
+            return price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
+        };
+
         watch(localIsCollapsed, (newVal) => {
             emit('update:isCollapsed', newVal);
         });
@@ -91,7 +98,8 @@ export default {
             localIsCollapsed,
             localSortBy,
             localSortDesc,
-            addItem
+            addItem,
+            formatPrice,
         };
 
 
@@ -108,7 +116,8 @@ export default {
 
 .product-name {
     text-decoration: none;
-    color: inherit;
+    color: #333;
+    font-weight: 500;
 }
 
 .product-name:hover {
