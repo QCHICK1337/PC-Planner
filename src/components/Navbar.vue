@@ -1,14 +1,18 @@
 <template>
-    <b-navbar toggleable="lg" type="light" variant="light" class="px-3 px-lg-5">
-        <router-link to="/" class="navbar-brand font-weight-bold"><font-awesome-icon icon="computer" /> PC PLANNER</router-link>
-        <b-navbar-toggle target="navbarNav"></b-navbar-toggle>
+    <b-navbar toggleable="lg" type="dark" variant="dark" class="px-3 px-lg-5">
+        <router-link to="/" class="navbar-brand font-weight-bold text-light">
+            <font-awesome-icon icon="computer" /> PC PLANNER
+        </router-link>
+        <b-button v-b-toggle.navbarNav class="navbar-toggler custom-toggler" type="button">
+            <font-awesome-icon icon="bars" class="fa-lg" />
+        </b-button>
         <b-collapse id="navbarNav" is-nav>
             <b-navbar-nav>
                 <b-nav-item>
-                    <router-link to="/configurator" class="nav-link">Konfigurator</router-link>
+                    <router-link to="/configurator" class="nav-link text-light">Konfigurator</router-link>
                 </b-nav-item>
                 <b-nav-item>
-                    <router-link to="/about" class="nav-link">Informacje</router-link>
+                    <router-link to="/about" class="nav-link text-light">Informacje</router-link>
                 </b-nav-item>
             </b-navbar-nav>
         </b-collapse>
@@ -16,16 +20,22 @@
 </template>
 
 <script>
-import { BNavbar, BNavbarToggle, BCollapse, BNavbarNav, BNavItem } from 'bootstrap-vue-next'
+import { BNavbar, BButton, BCollapse, BNavbarNav, BNavItem } from 'bootstrap-vue-next'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faBars)
 
 export default {
     name: 'Navbar',
     components: {
         BNavbar,
-        BNavbarToggle,
+        BButton,
         BCollapse,
         BNavbarNav,
         BNavItem,
+        FontAwesomeIcon
     }
 }
 </script>
@@ -33,5 +43,9 @@ export default {
 <style scoped>
 .navbar-brand {
     font-weight: 900 !important;
+}
+
+.custom-toggler {
+    color: #fff;
 }
 </style>
