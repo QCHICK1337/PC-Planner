@@ -1,6 +1,6 @@
 <template>
     <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
-        @row-clicked="selectItem" responsive="md">
+        @row-clicked="selectItem" responsive="md" tbody-tr-class="align-middle">
         <template #cell(image)="data">
             <router-link :to="{ name: 'ProductDetails', params: { collection: itemType, name: data.item.name } }">
                 <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
