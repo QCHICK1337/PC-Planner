@@ -26,8 +26,13 @@
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
                     </div>
                     <div v-else-if="isSelected(card.id) && card.link" class="w-100 m-auto d-flex">
-                        <router-link :to="card.link" class="btn btn-primary w-50 no-wrap">Zmień</router-link>
-                        <button @click="removeSelection(card.id)" class="btn btn-danger w-50 no-wrap">Usuń</button>
+                        <router-link :to="card.link" class="btn btn-primary w-50 no-wrap" style="margin-right: 5px;">
+                            <i class="fa fa-edit"></i> Zmień
+                        </router-link>
+                        <button @click="removeSelection(card.id)" class="btn btn-danger w-50 no-wrap"
+                            style="margin-left: 5px;">
+                            <i class="fa fa-trash"></i> Usuń
+                        </button>
                     </div>
                     <div v-else class="w-100 m-auto">
                         <button class="btn btn-primary w-100">Dodaj</button>
