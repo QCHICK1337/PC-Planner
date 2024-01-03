@@ -16,12 +16,10 @@
                                     alt="Component Image" class="component-image mb-2 mr-2">
                                 <div>
                                     {{ getSelectedData(card.id).name }}
-                                    <small class="text-muted d-block">{{ formatPrice(getSelectedData(card.id).price) }}</small>
+                                    <small class="text-muted d-block">{{ formatPrice(getSelectedData(card.id).price)
+                                    }}</small>
                                 </div>
                             </router-link>
-                        </template>
-                        <template v-else>
-                            <!-- Render placeholder or disabled link -->
                         </template>
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
@@ -239,7 +237,7 @@ export default {
     width: 50px;
     height: 50px;
     object-fit: cover;
-    flex-shrink: 0; 
+    flex-shrink: 0;
     margin-right: 10px;
 }
 

@@ -1,23 +1,28 @@
 <template>
-    <div v-if="productDetails" class="d-flex justify-content-center">
-        <b-card style="max-width: 800px;" class="mb-3">
+    <div v-if="productDetails" class="justify-content-center mt-5 text-center">
+        <b-card style="max-width: 800px; border: none;" class="mb-3 mx-auto p-3">
             <b-row>
-                <b-col md="6">
-                    <b-card-img :src="productDetails.image" alt="Product image"></b-card-img>
+                <b-col md="6" class="mb-3">
+                    <b-card-img :src="productDetails.image" alt="Product image" class="img-fluid" style="max-width: 300px;"></b-card-img>
                 </b-col>
-                <b-col md="6">
+                <b-col md="6" class="mb-3 d-flex align-items-center justify-content-center flex-column">
                     <b-card-text>
-                        <h1>{{ productDetails.name }}</h1>
-                        <p>{{ productDetails.price }}</p>
-                        <b-list-group>
-                            <b-list-group-item v-for="(value, key) in filteredProductDetails" :key="key">
-                                <strong>{{ key }}:</strong> {{ value }}
-                            </b-list-group-item>
-                        </b-list-group>
+                        <h3 class="mb-2">{{ productDetails.name }}</h3>
+                        <p class="mb-0 text-muted">{{ formatPrice(productDetails.price) }}</p>
                     </b-card-text>
                 </b-col>
             </b-row>
         </b-card>
+        <div class="mb-5">
+            <b-list-group class="mx-auto" style="max-width: 800px;">
+                <b-list-group-item v-for="(item, index) in filteredProductDetailsArray" :key="index">
+                    <b-row>
+                        <b-col md="6" class="text-muted">{{ item.key }}</b-col>
+                        <b-col md="6">{{ item.value }}</b-col>
+                    </b-row>
+                </b-list-group-item>
+            </b-list-group>
+        </div>
     </div>
 </template>
 
@@ -58,10 +63,52 @@ export default {
             return otherDetails;
         });
 
+        const labels = {
+            'core-count': 'Liczba rdzeni',
+            'socket': 'Gniazdo procesora',
+            'tdp': 'TDP',
+            'base-clock': 'Taktowanie bazowe',
+            'boost-clock': 'Taktowanie turbo',
+            'manufacturer': 'Producent',
+            'water-cooled': 'Chłodzenie wodne',
+            'max-noise': 'Maksymalny poziom hałasu',
+            'max-rpm': 'Maksymalna prędkość obrotowa',
+            'form-factor': 'Standard płyty',
+            'memory-type': 'Typ pamięci RAM',
+            'type': 'Typ pamięci RAM',
+            'latency': 'Opóźnienie',
+            'speed': 'Częstotliwość',
+            'modules': 'Moduły',
+            'total-memory': 'Pojemność',
+            'interface': 'Interfejs',
+            'capacity': 'Pojemność',
+            'memory': 'Pamięć',
+            'chipset': 'Chipset',
+            'core-clock': 'Taktowanie rdzenia',
+            'color': 'Kolor',
+            'motherboard-form-factor': 'Standard płyty głównej',
+            'wattage': 'Moc zasilacza',
+            'efficiency-rating': 'Cerfyfikat sprawności',
+        }
+
+        const filteredProductDetailsArray = computed(() => {
+            return Object.entries(filteredProductDetails.value).map(([key, value]) => ({
+                key: labels[key] || key,
+                value
+            }));
+        });
+
         return {
+            labels,
             productDetails,
-            filteredProductDetails
+            filteredProductDetails,
+            filteredProductDetailsArray
         };
+    },
+    methods: {
+        formatPrice(price) {
+            return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(price);
+        }
     }
 };
 </script>
