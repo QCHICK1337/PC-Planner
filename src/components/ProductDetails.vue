@@ -3,7 +3,8 @@
         <b-card style="max-width: 800px; border: none;" class="mb-3 mx-auto p-3">
             <b-row>
                 <b-col md="6" class="mb-3">
-                    <b-card-img :src="productDetails.image" alt="Product image" class="img-fluid" style="max-width: 300px;"></b-card-img>
+                    <b-card-img :src="productDetails.image" alt="Product image" class="img-fluid"
+                        style="max-width: 300px;"></b-card-img>
                 </b-col>
                 <b-col md="6" class="mb-3 d-flex align-items-center justify-content-center flex-column">
                     <b-card-text>
@@ -89,17 +90,28 @@ export default {
             'motherboard-form-factor': 'Standard płyty głównej',
             'wattage': 'Moc zasilacza',
             'efficiency-rating': 'Cerfyfikat sprawności',
+            'case-type': 'Typ obudowy',
         }
 
+        const valueLabels = {
+            'true': 'Tak',
+            'false': 'Nie'
+        }
+
+        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'wattage', 'efficiency-rating'];
+
         const filteredProductDetailsArray = computed(() => {
-            return Object.entries(filteredProductDetails.value).map(([key, value]) => ({
-                key: labels[key] || key,
-                value
-            }));
+            return Object.entries(filteredProductDetails.value)
+                .sort(([keyA], [keyB]) => orderOfKeys.indexOf(keyA) - orderOfKeys.indexOf(keyB))
+                .map(([key, value]) => ({
+                    key: labels[key] || key,
+                    value: valueLabels[String(value)] || value
+                }));
         });
 
         return {
             labels,
+            valueLabels,
             productDetails,
             filteredProductDetails,
             filteredProductDetailsArray
