@@ -7,11 +7,21 @@
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
                 <BCard :header="card.title" class="d-flex flex-column flex-grow-1"
                     style="max-width: 30rem; margin: 0 auto;">
-                    <BCardText class="flex-grow-1 d-flex flex-column align-items-center">
-                        <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
-                            alt="Component Image" class="component-image mb-2">
-                        {{ getSelectedData(card.id).name }}
-                        <small class="text-muted">{{ formatPrice(getSelectedData(card.id).price) }}</small>
+                    <BCardText class="flex-grow-1 d-flex flex-column align-items-start text-left">
+                        <template v-if="getSelectedData(card.id).name">
+                            <router-link class="product-name d-flex align-items-center"
+                                :to="{ name: 'ProductDetails', params: { type: card.link.replace('/products/', ''), name: getSelectedData(card.id).name, collection: card.collection } }">
+                                <img v-if="getSelectedData(card.id).image" :src="getSelectedData(card.id).image"
+                                    alt="Component Image" class="component-image mb-2 mr-2">
+                                <div>
+                                    {{ getSelectedData(card.id).name }}
+                                    <small class="text-muted d-block">{{ formatPrice(getSelectedData(card.id).price) }}</small>
+                                </div>
+                            </router-link>
+                        </template>
+                        <template v-else>
+                            <!-- Render placeholder or disabled link -->
+                        </template>
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
                         <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
@@ -137,50 +147,63 @@ export default {
                 title: 'Procesor',
                 text: 'Wybierz produkt',
                 link: '/products/cpu',
+                collection: 'cpu'
             },
             {
                 id: 2,
                 title: 'Chłodzenie',
                 text: 'Wybierz produkt',
                 link: '/products/coolers',
-            },
+                collection: 'cooler'
+            }
+            ,
             {
                 id: 3,
                 title: 'Płyta główna',
                 text: 'Wybierz produkt',
                 link: '/products/motherboards',
-            },
+                collection: 'motherboard'
+            }
+            ,
             {
                 id: 4,
                 title: 'Pamięć RAM',
                 text: 'Wybierz produkt',
                 link: '/products/ram',
-            },
+                collection: 'ram'
+            }
+            ,
             {
                 id: 5,
-                title: 'Dysk twardy',
+                title: 'Dysk',
                 text: 'Wybierz produkt',
                 link: '/products/storage',
-            },
+                collection: 'storage'
+            }
+            ,
             {
                 id: 6,
                 title: 'Karta graficzna',
                 text: 'Wybierz produkt',
                 link: '/products/gpu',
-            },
+                collection: 'gpu'
+            }
+            ,
             {
                 id: 7,
                 title: 'Obudowa',
                 text: 'Wybierz produkt',
                 link: '/products/cases',
-
-            },
+                collection: 'case'
+            }
+            ,
             {
                 id: 8,
                 title: 'Zasilacz',
                 text: 'Wybierz produkt',
                 link: '/products/psu',
-            },
+                collection: 'psu'
+            }
         ]);
         const addCard = (card) => {
             cards.value.push(card);
@@ -215,9 +238,21 @@ export default {
     width: 50px;
     height: 50px;
     object-fit: cover;
+    flex-shrink: 0; 
+    margin-right: 10px;
 }
 
 .no-wrap {
     white-space: nowrap;
+}
+
+.product-name {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.product-name:hover {
+    color: rgb(95, 95, 255);
 }
 </style>
