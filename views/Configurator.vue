@@ -1,5 +1,6 @@
 <template>
     <div class="container mt-4">
+        <h2 class="text-center my-4 my-md-5">Konfigurator</h2>
         <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
             {{ error }}
         </div>

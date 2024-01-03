@@ -1,4 +1,5 @@
 <template>
+    <h2 class="text-center my-4 my-md-5">Wybierz płytę główną</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">

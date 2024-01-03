@@ -1,5 +1,6 @@
 <template>
     <div class="about container text-start my-4">
+        <h2 class="text-center my-4 my-md-5">Informacje</h2>
         <h5 class="mb-3">Stwórz idealną konfigurację komputera</h5>
         <p class="mb-4">
             PC Planner to narzędzie internetowe, które pomaga entuzjastom komputerowym i konstruktorom w tworzeniu idealnych
