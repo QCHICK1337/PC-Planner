@@ -1,6 +1,6 @@
 <template>
     <b-table :items="items" :fields="fields" v-model:sortBy="localSortBy" v-model:sortDesc="localSortDesc"
-        @row-clicked="selectItem" responsive="md" tbody-tr-class="align-middle">
+        @row-clicked="selectItem" responsive="md" tbody-tr-class="align-middle" :sort-compare="sortNumericFields">
         <template #cell(image)="data">
             <router-link :to="{ name: 'ProductDetails', params: { collection: itemType, name: data.item.name } }">
                 <b-img :src="data.item.image" alt="Image" class="my-image"></b-img>
@@ -77,6 +77,16 @@ export default {
             router.push('/configurator');
         };
 
+        const sortNumericFields = (a, b, key) => {
+            if (key === 'name') {
+                return props.sortDesc ? b[key].localeCompare(a[key]) : a[key].localeCompare(b[key]);
+            }
+            if (!isNaN(a[key]) && !isNaN(b[key])) {
+                return props.sortDesc ? b[key] - a[key] : a[key] - b[key];
+            }
+            return a[key] > b[key] ? 1 : (a[key] < b[key] ? -1 : 0);
+        };
+
         const formatPrice = (price) => {
             return price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
         };
@@ -100,6 +110,7 @@ export default {
             localSortDesc,
             addItem,
             formatPrice,
+            sortNumericFields,
         };
 
 
