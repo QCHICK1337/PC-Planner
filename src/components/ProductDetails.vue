@@ -91,6 +91,9 @@ export default {
             'wattage': 'Moc zasilacza',
             'efficiency-rating': 'Cerfyfikat sprawności',
             'case-type': 'Typ obudowy',
+            'memory-form-factor': 'Format',
+            'gpu-memory-type': 'Rodzaj pamięci',
+            'psu-type': 'Standard',
         }
 
         const valueLabels = {
@@ -98,7 +101,7 @@ export default {
             'false': 'Nie'
         }
 
-        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'wattage', 'efficiency-rating'];
+        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'gpu-memory-type', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'psu-type', 'wattage', 'efficiency-rating', 'memory-form-factor'];
 
         const filteredProductDetailsArray = computed(() => {
             return Object.entries(filteredProductDetails.value)

@@ -7,8 +7,8 @@
             </b-col>
             <b-col cols="12" md="10">
                 <component-list :items="filteredProducts" :fields="fields" :filter-categories="filters"
-                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-                    @select-item="selectStorage" :itemType="'storage'" />
+                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy"
+                    v-model:sort-desc="state.sortDesc" @select-item="selectStorage" :itemType="'storage'" />
             </b-col>
         </b-row>
     </b-container>
@@ -19,14 +19,14 @@ import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { reactive, onMounted, computed } from 'vue'; 
+import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
-import FilterSidebar from './FilterSidebar.vue'; 
+import FilterSidebar from './FilterSidebar.vue';
 
 export default {
     components: {
         ComponentList,
-        FilterSidebar, 
+        FilterSidebar,
     },
     setup() {
         const store = useStore();
@@ -49,6 +49,24 @@ export default {
                 options: [],
                 selectedOptions: [],
             },
+            {
+                name: 'Capacity',
+                label: 'Pojemność',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Memory-Form-Factor',
+                label: 'Format pamięci',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Interface',
+                label: 'Interfejs',
+                options: [],
+                selectedOptions: [],
+            },
         ]);
 
         onMounted(() => {
@@ -58,7 +76,18 @@ export default {
 
                 filters.forEach(filter => {
                     const productProperty = filter.name.toLowerCase();
-                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+
+                    if (filter.name === 'Capacity') {
+                        uniqueValues.sort((a, b) => {
+                            const numA = parseInt(a.replace(/\D/g, ''));
+                            const numB = parseInt(b.replace(/\D/g, ''));
+                            return numA - numB;
+                        });
+                    } else {
+                        uniqueValues.sort();
+                    }
+
                     filter.options = uniqueValues;
                     filter.selectedOptions = uniqueValues;
                 });
