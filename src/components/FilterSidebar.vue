@@ -1,7 +1,8 @@
 <template>
   <div>
     <h4 v-show="isDesktop">Filtry</h4>
-    <b-button v-b-toggle="'collapse-filters'" class="mb-2" variant="primary" v-show="!isDesktop"><font-awesome-icon icon="filter" /> Filtry</b-button>
+    <b-button v-b-toggle="'collapse-filters'" class="mb-2" variant="primary" v-show="!isDesktop"><font-awesome-icon
+        icon="filter" /> Filtry</b-button>
     <b-collapse id="collapse-filters" v-model="isCollapseVisible">
       <b-form-group :label="filter.label" v-for="filter in filters" :key="filter.name">
         <template #label>
@@ -9,7 +10,7 @@
         </template>
         <b-form-checkbox-group v-model="filter.selectedOptions" stacked>
           <b-form-checkbox v-for="option in filter.options" :key="option" :value="option">
-            {{ option }}
+            {{ getOptionLabel(option, filter.name) }}
           </b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
@@ -42,6 +43,12 @@ export default {
       const isDesktopNow = window.innerWidth >= 768;
       this.isDesktop = isDesktopNow;
       this.isCollapseVisible = isDesktopNow;
+    },
+    getOptionLabel(option, filterName) {
+      if (filterName === 'Water-Cooled') {
+        return option ? 'Tak' : 'Nie';
+      }
+      return option;
     },
   },
   watch: {

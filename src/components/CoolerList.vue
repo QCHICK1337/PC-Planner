@@ -7,8 +7,8 @@
             </b-col>
             <b-col cols="12" md="10">
                 <component-list :items="filteredProducts" :fields="fields" :filter-categories="filters"
-                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy" v-model:sort-desc="state.sortDesc"
-                    @select-item="selectCooler" :itemType="'cooler'" />
+                    v-model:is-collapsed="state.isCollapsed" v-model:sort-by="state.sortBy"
+                    v-model:sort-desc="state.sortDesc" @select-item="selectCooler" :itemType="'cooler'" />
             </b-col>
         </b-row>
     </b-container>
@@ -19,14 +19,14 @@ import { db } from '../firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { reactive, onMounted, computed } from 'vue'; 
+import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
-import FilterSidebar from './FilterSidebar.vue'; 
+import FilterSidebar from './FilterSidebar.vue';
 
 export default {
     components: {
         ComponentList,
-        FilterSidebar, 
+        FilterSidebar,
     },
     setup() {
         const store = useStore();
@@ -49,6 +49,12 @@ export default {
                 options: [],
                 selectedOptions: [],
             },
+            {
+                name: 'Water-Cooled',
+                label: 'Chłodzenie wodne',
+                options: [true, false],
+                selectedOptions: [true, false],
+            },
         ]);
 
         onMounted(() => {
@@ -57,10 +63,12 @@ export default {
                 state.products = snapshot.docs.map(doc => doc.data());
 
                 filters.forEach(filter => {
-                    const productProperty = filter.name.toLowerCase();
-                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
-                    filter.options = uniqueValues;
-                    filter.selectedOptions = uniqueValues;
+                    if (filter.name !== 'Water-Cooled') {
+                        const productProperty = filter.name.toLowerCase();
+                        const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                        filter.options = uniqueValues;
+                        filter.selectedOptions = uniqueValues;
+                    }
                 });
             });
         });
