@@ -44,6 +44,7 @@ export default {
 
         const selectedManufacturers = ref([]);
         const selectedSockets = ref([]);
+        const selectedCoreCounts = ref([]);
 
         const filters = reactive([
             {
@@ -54,7 +55,13 @@ export default {
             },
             {
                 name: 'Socket',
-                label: 'Socket',
+                label: 'Gniazdo procesora',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Core-Count',
+                label: 'Liczba rdzeni',
                 options: [],
                 selectedOptions: [],
             },
@@ -67,7 +74,13 @@ export default {
 
                 filters.forEach(filter => {
                     const productProperty = filter.name.toLowerCase();
-                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    
+                    // If the filter is for core-count, sort the options from low to high
+                    if (filter.name === 'Core-Count') {
+                        uniqueValues = uniqueValues.sort((a, b) => a - b);
+                    }
+
                     filter.options = uniqueValues;
                     filter.selectedOptions = uniqueValues;
                 });
@@ -85,6 +98,11 @@ export default {
                     name: 'Socket',
                     options: state.sockets,
                     selectedOptions: selectedSockets.value,
+                },
+                {
+                    name: 'Core-Count',
+                    options: state.coreCounts,
+                    selectedOptions: selectedCoreCounts.value,
                 },
             ];
         });
@@ -117,7 +135,7 @@ export default {
             fields: [
                 { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
+                { key: 'core-count', sortable: true, label: 'Liczba rdzeni' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'add', label: '' },
             ],
