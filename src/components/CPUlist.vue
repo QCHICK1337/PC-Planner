@@ -55,7 +55,7 @@ export default {
             },
             {
                 name: 'Socket',
-                label: 'Gniazdo procesora',
+                label: 'Socket',
                 options: [],
                 selectedOptions: [],
             },

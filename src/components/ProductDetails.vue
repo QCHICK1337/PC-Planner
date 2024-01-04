@@ -66,7 +66,7 @@ export default {
 
         const labels = {
             'core-count': 'Liczba rdzeni',
-            'socket': 'Gniazdo procesora',
+            'socket': 'Socket',
             'tdp': 'TDP',
             'base-clock': 'Taktowanie bazowe',
             'boost-clock': 'Taktowanie turbo',
