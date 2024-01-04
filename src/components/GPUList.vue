@@ -49,6 +49,18 @@ export default {
                 options: [],
                 selectedOptions: [],
             },
+            {
+                name: 'Chipset',
+                label: 'Chipset',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Memory',
+                label: 'Pamięć',
+                options: [],
+                selectedOptions: [],
+            },
         ]);
 
         onMounted(() => {
@@ -58,7 +70,18 @@ export default {
 
                 filters.forEach(filter => {
                     const productProperty = filter.name.toLowerCase();
-                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+
+                    if (filter.name === 'Memory') {
+                        uniqueValues.sort((a, b) => {
+                            const numA = parseInt(a.replace(/\D/g, ''));
+                            const numB = parseInt(b.replace(/\D/g, ''));
+                            return numA - numB;
+                        });
+                    } else {
+                        uniqueValues.sort();
+                    }
+
                     filter.options = uniqueValues;
                     filter.selectedOptions = uniqueValues;
                 });
@@ -93,7 +116,7 @@ export default {
             fields: [
                 { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'core-count', sortable: true, label: 'Ilość rdzeni' },
+                { key: 'memory', sortable: true, label: 'Pamięć' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'add', label: '' },
             ],
