@@ -49,6 +49,18 @@ export default {
                 options: [],
                 selectedOptions: [],
             },
+            {
+                name: 'Case-Type',
+                label: 'Typ obudowy',
+                options: [],
+                selectedOptions: [],
+            },
+            {
+                name: 'Color',
+                label: 'Kolor',
+                options: [],
+                selectedOptions: [],
+            },
         ]);
 
         onMounted(() => {
@@ -58,7 +70,8 @@ export default {
 
                 filters.forEach(filter => {
                     const productProperty = filter.name.toLowerCase();
-                    const uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
+                    uniqueValues.sort();
                     filter.options = uniqueValues;
                     filter.selectedOptions = uniqueValues;
                 });
