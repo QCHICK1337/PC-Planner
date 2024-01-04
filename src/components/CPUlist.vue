@@ -76,7 +76,6 @@ export default {
                     const productProperty = filter.name.toLowerCase();
                     let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
                     
-                    // If the filter is for core-count, sort the options from low to high
                     if (filter.name === 'Core-Count') {
                         uniqueValues = uniqueValues.sort((a, b) => a - b);
                     }
