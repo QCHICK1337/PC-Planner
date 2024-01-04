@@ -106,7 +106,7 @@ export default {
             fields: [
                 { key: 'image', sortable: false, label: '' },
                 { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'dimensions', sortable: true, label: 'Wymiary' },
+                { key: 'case-type', sortable: true, label: 'Typ obudowy' },
                 { key: 'price', sortable: true, label: 'Cena' },
                 { key: 'add', label: '' },
             ],
