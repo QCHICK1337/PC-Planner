@@ -2,9 +2,9 @@
   <footer class="footer">
     <div class="container">
     <span class="text-muted">
-        <font-awesome-icon icon="heart" /> Made by QCHICK1337
+        <font-awesome-icon icon="heart" /> Made by K.R.
         <br />
-        <small class="text-muted">2023-2024</small>
+        <small class="text-muted">2024</small>
     </span>
     </div>
   </footer>
