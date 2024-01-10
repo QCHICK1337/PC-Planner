@@ -267,6 +267,7 @@ export default {
     text-decoration: none;
     color: #333;
     font-weight: 500;
+    min-height: 70px;
 }
 
 .product-name:hover {
