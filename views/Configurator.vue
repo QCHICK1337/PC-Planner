@@ -39,10 +39,11 @@
                     </div>
                 </BCard>
             </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-12 text-center">
-                <h4>Łącznie: <span class="text-muted">{{ totalPrice }}</span></h4>
+            <div class="row mt-2 mb-4">
+                <div class="col-12 text-left">
+                    <h5 class="mb-3"><font-awesome-icon icon="bolt" /> Szacowany pobór mocy: <span class="text-muted">{{ estimatedPower }} W</span></h5>
+                    <h5><font-awesome-icon icon="receipt" /> Łączna cena: <span class="text-muted">{{ totalPrice }}</span></h5>
+                </div>
             </div>
         </div>
     </div>
@@ -117,6 +118,17 @@ export default {
         const formatPrice = (price) => {
             return price ? price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł' : '';
         };
+
+        const estimatedPower = computed(() => {
+            let totalPower = 0;
+            if (selectedCpu.value) totalPower += parseInt(selectedCpu.value.tdp);
+            if (selectedGPU.value) totalPower += parseInt(selectedGPU.value.tdp);
+            if (selectedCooler.value) totalPower += 10;
+            if (selectedMotherboard.value) totalPower += 70;
+            if (selectedRAM.value) totalPower += 25;
+            if (selectedStorage.value) totalPower += 10;
+            return totalPower;
+        });
 
         const removeSelection = (id) => {
             switch (id) {
@@ -227,6 +239,7 @@ export default {
             isCompatible,
             totalPrice,
             formatPrice,
+            estimatedPower,
             removeSelection,
             cards,
             addCard,
