@@ -12,6 +12,7 @@ import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faHeart)
@@ -20,6 +21,7 @@ library.add(faScrewdriverWrench)
 library.add(faFilter)
 library.add(faBolt)
 library.add(faReceipt)
+library.add(faCodeBranch)
 
 document.title = 'PC Planner'
 
