@@ -20,9 +20,6 @@
             <li class="mb-2">
                 Szacowanie Kosztów: Otrzymaj szacunkowy koszt całkowity swojej konfiguracji podczas dodawania komponentów.
             </li>
-            <li class="mb-2">
-                Zapisz i Udostępnij: Zapisuj swoje konfiguracje PC do późniejszego wykorzystania i udostępniaj je innym.
-            </li>
         </ul>
     </div>
 </template>
