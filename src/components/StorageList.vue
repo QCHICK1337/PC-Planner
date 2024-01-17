@@ -82,7 +82,14 @@ export default {
                         uniqueValues.sort((a, b) => {
                             const numA = parseInt(a.replace(/\D/g, ''));
                             const numB = parseInt(b.replace(/\D/g, ''));
-                            return numA - numB;
+                            const unitA = a.replace(/\d/g, '').trim();
+                            const unitB = b.replace(/\d/g, '').trim();
+
+                            if (unitA === unitB) {
+                                return numA - numB;
+                            } else {
+                                return unitA === 'GB' ? -1 : 1;
+                            }
                         });
                     } else {
                         uniqueValues.sort();
