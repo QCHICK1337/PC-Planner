@@ -68,6 +68,7 @@ export default {
             'core-count': 'Liczba rdzeni',
             'socket': 'Socket',
             'tdp': 'TDP',
+            'mtp': 'MTP',
             'base-clock': 'Taktowanie bazowe',
             'boost-clock': 'Taktowanie turbo',
             'manufacturer': 'Producent',
@@ -101,7 +102,7 @@ export default {
             'false': 'Nie'
         }
 
-        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'gpu-memory-type', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'psu-type', 'wattage', 'efficiency-rating', 'memory-form-factor'];
+        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'mtp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'gpu-memory-type', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'psu-type', 'wattage', 'efficiency-rating', 'memory-form-factor'];
 
         const filteredProductDetailsArray = computed(() => {
             return Object.entries(filteredProductDetails.value)

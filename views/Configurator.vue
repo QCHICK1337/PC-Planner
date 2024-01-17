@@ -121,7 +121,7 @@ export default {
 
         const estimatedPower = computed(() => {
             let totalPower = 0;
-            if (selectedCpu.value) totalPower += parseInt(selectedCpu.value.tdp);
+            if (selectedCpu.value) totalPower += parseInt(selectedCpu.value.mtp);
             if (selectedGPU.value) totalPower += parseInt(selectedGPU.value.tdp);
             if (selectedCooler.value) totalPower += 10;
             if (selectedMotherboard.value) totalPower += 70;
