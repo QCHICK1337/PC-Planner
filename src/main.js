@@ -6,7 +6,7 @@ import { BootstrapVueNext } from 'bootstrap-vue-next'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { faComputer } from '@fortawesome/free-solid-svg-icons'  
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
@@ -22,6 +22,7 @@ library.add(faFilter)
 library.add(faBolt)
 library.add(faReceipt)
 library.add(faCodeBranch)
+library.add(faTriangleExclamation)
 
 document.title = 'PC Planner'
 
