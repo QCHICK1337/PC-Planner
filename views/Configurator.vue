@@ -2,7 +2,7 @@
     <div class="container mt-4">
         <h2 class="text-center my-4 my-md-5">Konfigurator</h2>
         <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
-            {{ error }}
+            <font-awesome-icon icon="triangle-exclamation" /> {{ error }}
         </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
@@ -41,8 +41,10 @@
             </div>
             <div class="row mt-2 mb-4">
                 <div class="col-12 text-left">
-                    <h5 class="mb-3"><font-awesome-icon icon="bolt" /> Szacowany pobór mocy: <span class="text-muted">{{ estimatedPower }} W</span></h5>
-                    <h5><font-awesome-icon icon="receipt" /> Łączna cena: <span class="text-muted">{{ totalPrice }}</span></h5>
+                    <h5 class="mb-3"><font-awesome-icon icon="bolt" /> Szacowany pobór mocy: <span class="text-muted">{{
+                        estimatedPower }} W</span></h5>
+                    <h5><font-awesome-icon icon="receipt" /> Łączna cena: <span class="text-muted">{{ totalPrice }}</span>
+                    </h5>
                 </div>
             </div>
         </div>
@@ -96,6 +98,13 @@ export default {
             if (selectedRAM.value && selectedMotherboard.value) {
                 if (selectedRAM.value.type !== selectedMotherboard.value['memory-type']) {
                     errors.push('Wybrana pamięć RAM i płyta główna nie są ze sobą kompatybilne. (Typ RAM)');
+                }
+            }
+
+            if (selectedMotherboard.value && selectedCase.value) {
+                const caseSupportedFormFactors = selectedCase.value['motherboard-form-factor'].split(', ');
+                if (!caseSupportedFormFactors.includes(selectedMotherboard.value['form-factor'])) {
+                    errors.push('Wybrana płyta główna i obudowa nie są ze sobą kompatybilne. (Standard płyty głównej)');
                 }
             }
 
