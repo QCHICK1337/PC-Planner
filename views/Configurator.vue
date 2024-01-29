@@ -13,7 +13,7 @@
                             <div v-if="card.id === 6">
                                 <font-awesome-icon icon="info-circle" class="text-muted" id="tooltip-target" />
                                 <b-tooltip target="tooltip-target" variant="primary">
-                                    This is the GPU card
+                                    Komponent opcjonalny
                                 </b-tooltip>
                             </div>
                         </div>
