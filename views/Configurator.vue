@@ -5,7 +5,7 @@
             <font-awesome-icon icon="triangle-exclamation" /> {{ error }}
         </div>
         <div class="row d-flex flex-wrap">
-            <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
+            <div v-for="card in cards" :key="card.id" class="col-12 col-md-6 col-lg-3 mb-4">
                 <BCard class="d-flex flex-column flex-grow-1" style="max-width: 30rem; margin: 0 auto;">
                     <template v-slot:header>
                         <div class="d-flex align-items-center">
@@ -13,7 +13,7 @@
                             <div v-if="card.id === 6">
                                 <font-awesome-icon icon="info-circle" class="text-muted" id="tooltip-target" />
                                 <b-tooltip target="tooltip-target" variant="primary">
-                                    Komponent opcjonalny
+                                    This is the GPU card
                                 </b-tooltip>
                             </div>
                         </div>
