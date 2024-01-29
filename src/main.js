@@ -13,6 +13,7 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faHeart)
@@ -23,6 +24,7 @@ library.add(faBolt)
 library.add(faReceipt)
 library.add(faCodeBranch)
 library.add(faTriangleExclamation)
+library.add(faInfoCircle)
 
 document.title = 'PC Planner'
 

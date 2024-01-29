@@ -6,8 +6,18 @@
         </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-3 mb-4">
-                <BCard :header="card.title" class="d-flex flex-column flex-grow-1"
-                    style="max-width: 30rem; margin: 0 auto;">
+                <BCard class="d-flex flex-column flex-grow-1" style="max-width: 30rem; margin: 0 auto;">
+                    <template v-slot:header>
+                        <div class="d-flex align-items-center">
+                            <div>{{ card.title }}&nbsp;</div>
+                            <div v-if="card.id === 6">
+                                <font-awesome-icon icon="info-circle" class="text-muted" id="tooltip-target" />
+                                <b-tooltip target="tooltip-target" variant="primary">
+                                    Komponent opcjonalny
+                                </b-tooltip>
+                            </div>
+                        </div>
+                    </template>
                     <BCardText class="flex-grow-1 d-flex flex-column align-items-start text-left">
                         <template v-if="getSelectedData(card.id).name">
                             <router-link class="product-name d-flex align-items-center"
@@ -27,11 +37,11 @@
                     </div>
                     <div v-else-if="isSelected(card.id) && card.link" class="w-100 m-auto d-flex">
                         <router-link :to="card.link" class="btn btn-primary w-50 no-wrap" style="margin-right: 5px;">
-                            <i class="fa fa-edit"></i> Zmień
+                            Zmień
                         </router-link>
                         <button @click="removeSelection(card.id)" class="btn btn-danger w-50 no-wrap"
                             style="margin-left: 5px;">
-                            <i class="fa fa-trash"></i> Usuń
+                            Usuń
                         </button>
                     </div>
                     <div v-else class="w-100 m-auto">
