@@ -15,8 +15,4 @@ PC-Planner is a web-based tool developed as part of a college project to help PC
 
 - **Cost Estimation:** Get an estimate of the total cost of your PC build as you add components.
 
-- **Save and Share:** Save your PC configurations for future reference and share them with others.
 
-## License
-
-PC-Planner is open-source software released under the MIT License.
