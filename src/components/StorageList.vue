@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-center my-4 my-md-5">Wybierz dysk</h2>
+    <h2 class="text-center my-4 my-md-5">{{ $t('labels.selectStorage') }}</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">
@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -29,6 +30,7 @@ export default {
         FilterSidebar,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const state = reactive({
@@ -45,25 +47,25 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
-                label: 'Producent',
+                label: t('labels.manufacturer'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Capacity',
-                label: 'Pojemność',
+                label: t('labels.capacity'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Memory-Form-Factor',
-                label: 'Format pamięci',
+                label: t('labels.memory-form-factor'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Interface',
-                label: 'Interfejs',
+                label: t('labels.interface'),
                 options: [],
                 selectedOptions: [],
             },
@@ -75,7 +77,7 @@ export default {
                 state.products = snapshot.docs.map(doc => doc.data());
 
                 filters.forEach(filter => {
-                    const productProperty = filter.name.toLowerCase();
+                    const productProperty = filter.name.toLowerCase().replace('-', '-');
                     let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
 
                     if (filter.name === 'Capacity') {
@@ -111,10 +113,19 @@ export default {
         const filteredProducts = computed(() => {
             return state.products.filter(product => {
                 return filters.every(filter => {
-                    return filter.selectedOptions.includes(product[filter.name.toLowerCase()]);
+                    const productProperty = filter.name.toLowerCase().replace('-', '-');
+                    return filter.selectedOptions.includes(product[productProperty]);
                 });
             });
         });
+
+        const fields = computed(() => [
+            { key: 'image', sortable: false, label: '' },
+            { key: 'name', sortable: true, label: t('labels.name') },
+            { key: 'capacity', sortable: true, label: t('labels.capacity') },
+            { key: 'price', sortable: true, label: t('labels.price') },
+            { key: 'add', label: '' },
+        ]);
 
         return {
             state,
@@ -122,18 +133,7 @@ export default {
             filters,
             applyFilters,
             filteredProducts,
-        };
-    },
-    data() {
-        return {
-            fields: [
-                { key: 'image', sortable: false, label: '' },
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'capacity', sortable: true, label: 'Pojemność' },
-                { key: 'price', sortable: true, label: 'Cena' },
-                { key: 'add', label: '' },
-            ],
-            filterCategories: [],
+            fields,
         };
     },
 };

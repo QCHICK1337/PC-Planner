@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-center my-4 my-md-5">Wybierz procesor</h2>
+    <h2 class="text-center my-4 my-md-5">{{ $t('labels.selectCpu') }}</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">
@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import { reactive, onMounted, computed, ref, watchEffect } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -29,6 +30,7 @@ export default {
         FilterSidebar,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const state = reactive({
@@ -49,19 +51,19 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
-                label: 'Producent',
+                label: t('labels.manufacturer'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Socket',
-                label: 'Socket',
+                label: t('labels.socket'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Core-Count',
-                label: 'Liczba rdzeni',
+                label: t('labels.core-count'),
                 options: [],
                 selectedOptions: [],
             },
@@ -75,7 +77,7 @@ export default {
                 filters.forEach(filter => {
                     const productProperty = filter.name.toLowerCase();
                     let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
-                    
+
                     if (filter.name === 'Core-Count') {
                         uniqueValues = uniqueValues.sort((a, b) => a - b);
                     }
@@ -121,23 +123,21 @@ export default {
             }
         };
 
+        const fields = computed(() => [
+            { key: 'image', sortable: false, label: '' },
+            { key: 'name', sortable: true, label: t('labels.name') },
+            { key: 'core-count', sortable: true, label: t('labels.core-count') },
+            { key: 'price', sortable: true, label: t('labels.price') },
+            { key: 'add', label: '' },
+        ]);
+
         return {
             state,
             selectCpu,
             filters,
             filteredProducts,
             applyFilters,
-        };
-    },
-    data() {
-        return {
-            fields: [
-                { key: 'image', sortable: false, label: '' },
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'core-count', sortable: true, label: 'Liczba rdzeni' },
-                { key: 'price', sortable: true, label: 'Cena' },
-                { key: 'add', label: '' },
-            ],
+            fields,
             filterCategories: [],
         };
     },

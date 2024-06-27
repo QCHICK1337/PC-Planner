@@ -15,7 +15,7 @@
             </b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
-        </div>
+      </div>
     </b-collapse>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
     },
     getOptionLabel(option, filterName) {
       if (filterName === 'Water-Cooled') {
-        return option ? 'Tak' : 'Nie';
+        return option ? 'Yes' : 'No';
       }
       return option;
     },

@@ -1,0 +1,58 @@
+{
+    "menu": {
+        "configurator": "Konfigurator",
+        "about": "Informacje",
+        "selectCase": "Wybierz obudowę"
+    },
+    "productDetails": {
+        "name": "{name}",
+        "price": "{price}",
+        "description": "Opis",
+        "specifications": "Specyfikacje",
+        "addToCart": "Dodaj do koszyka"
+    },
+    "labels": {
+        "name": "Nazwa",
+        "price": "Cena",
+        "selectCase": "Wybierz obudowę",
+        "core-count": "Liczba rdzeni",
+        "socket": "Gniazdo",
+        "tdp": "TDP",
+        "mtp": "MTP",
+        "base-clock": "Taktowanie bazowe",
+        "boost-clock": "Taktowanie w trybie turbo",
+        "cores": "Rdzenie",
+        "threads": "Wątki",
+        "manufacturer": "Producent",
+        "memory-type": "Typ pamięci",
+        "module-type": "Typ modułu",
+        "speed": "Prędkość",
+        "size": "Rozmiar",
+        "chipset": "Chipset",
+        "form-factor": "Format",
+        "interface": "Interfejs",
+        "max-rpm": "Maks. RPM",
+        "max-noise": "Maks. hałas",
+        "water-cooled": "Chłodzenie wodne",
+        "capacity": "Pojemność",
+        "memory-form-factor": "Format pamięci",
+        "type": "Typ",
+        "latency": "Opóźnienie",
+        "total-memory": "Całkowita pamięć",
+        "modules": "Moduły",
+        "color": "Kolor",
+        "psu-type": "Typ PSU",
+        "wattage": "Moc",
+        "efficiency-rating": "Klasa efektywności",
+        "case-type": "Typ obudowy",
+        "motherboard-form-factor": "Format płyty głównej",
+        "core-clock": "Taktowanie rdzenia",
+        "memory": "Pamięć",
+        "gpu-memory-type": "Typ pamięci GPU"
+    },
+    "values": {
+        "true": "Tak",
+        "false": "Nie",
+        "unknown": "Nieznane"
+    }
+}

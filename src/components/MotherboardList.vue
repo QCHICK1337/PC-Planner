@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-center my-4 my-md-5">Wybierz płytę główną</h2>
+    <h2 class="text-center my-4 my-md-5">{{ $t('labels.selectMotherboard') }}</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">
@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -29,6 +30,7 @@ export default {
         FilterSidebar,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const state = reactive({
@@ -45,30 +47,29 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
-                label: 'Producent',
+                label: t('labels.manufacturer'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Socket',
-                label: 'Socket',
+                label: t('labels.socket'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Form-Factor',
-                label: 'Standard płyty',
+                label: t('labels.motherboard-form-factor'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Memory-Type',
-                label: 'Typ pamięci',
+                label: t('labels.memory-type'),
                 options: [],
                 selectedOptions: [],
             },
         ]);
-
         onMounted(() => {
             const q = query(collection(db, 'motherboard'));
             onSnapshot(q, (snapshot) => {
@@ -121,9 +122,9 @@ export default {
         return {
             fields: [
                 { key: 'image', sortable: false, label: '' },
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'socket', sortable: true, label: 'Socket' },
-                { key: 'price', sortable: true, label: 'Cena' },
+                { key: 'name', sortable: true, label: this.$t('labels.name') },
+                { key: 'socket', sortable: true, label: this.$t('labels.socket') },
+                { key: 'price', sortable: true, label: this.$t('labels.price') },
                 { key: 'add', label: '' },
             ],
             filterCategories: [],
