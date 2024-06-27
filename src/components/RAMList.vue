@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-center my-4 my-md-5">Wybierz pamięć RAM</h2>
+    <h2 class="text-center my-4 my-md-5">{{ $t('labels.selectRam') }}</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">
@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -29,6 +30,7 @@ export default {
         FilterSidebar,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const state = reactive({
@@ -45,37 +47,37 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
-                label: 'Producent',
+                label: t('labels.manufacturer'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Type',
-                label: 'Typ pamięci',
+                label: t('labels.type'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Total-Memory',
-                label: 'Pojemność łączna',
+                label: t('labels.total-memory'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Speed',
-                label: 'Prędkość',
+                label: t('labels.speed'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Latency',
-                label: 'Opóźnienie',
+                label: t('labels.latency'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Modules',
-                label: 'Moduły',
+                label: t('labels.modules'),
                 options: [],
                 selectedOptions: [],
             },
@@ -87,7 +89,7 @@ export default {
                 state.products = snapshot.docs.map(doc => doc.data());
 
                 filters.forEach(filter => {
-                    const productProperty = filter.name.toLowerCase();
+                    const productProperty = filter.name.toLowerCase().replace('-', '-');
                     let uniqueValues = [...new Set(state.products.map(product => product[productProperty]))];
 
                     if (filter.name === 'Type' || filter.name === 'Modules') {
@@ -116,10 +118,20 @@ export default {
         const filteredProducts = computed(() => {
             return state.products.filter(product => {
                 return filters.every(filter => {
-                    return filter.selectedOptions.includes(product[filter.name.toLowerCase()]);
+                    const productProperty = filter.name.toLowerCase().replace('-', '-');
+                    return filter.selectedOptions.includes(product[productProperty]);
                 });
             });
         });
+
+        const fields = computed(() => [
+            { key: 'image', sortable: false, label: '' },
+            { key: 'name', sortable: true, label: t('labels.name') },
+            { key: 'type', sortable: true, label: t('labels.type') },
+            { key: 'total-memory', sortable: true, label: t('labels.total-memory') },
+            { key: 'price', sortable: true, label: t('labels.price') },
+            { key: 'add', label: '' },
+        ]);
 
         return {
             state,
@@ -127,19 +139,7 @@ export default {
             filters,
             applyFilters,
             filteredProducts,
-        };
-    },
-    data() {
-        return {
-            fields: [
-                { key: 'image', sortable: false, label: '' },
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'type', sortable: true, label: 'Typ pamięci' },
-                { key: 'total-memory', sortable: true, label: 'Pojemność łączna' },
-                { key: 'price', sortable: true, label: 'Cena' },
-                { key: 'add', label: '' },
-            ],
-            filterCategories: [],
+            fields,
         };
     },
 };

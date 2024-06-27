@@ -8,7 +8,7 @@
                 </b-col>
                 <b-col md="6" class="mb-3 d-flex align-items-center justify-content-center flex-column">
                     <b-card-text>
-                        <h3 class="mb-2">{{ productDetails.name }}</h3>
+                        <h3 class="mb-2">{{ $t('productDetails.name', { name: productDetails.name }) }}</h3>
                         <p class="mb-0 text-muted">{{ formatPrice(productDetails.price) }}</p>
                     </b-card-text>
                 </b-col>
@@ -32,98 +32,48 @@ import { useRoute } from 'vue-router';
 import { db } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { onMounted, ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     setup() {
         const route = useRoute();
         const name = route.params.name;
         const collectionName = route.params.collection;
-
         const productDetails = ref(null);
+        const { t } = useI18n();
 
         onMounted(async () => {
             const q = query(collection(db, collectionName), where('name', '==', name));
             const querySnapshot = await getDocs(q);
-
             querySnapshot.forEach((doc) => {
                 productDetails.value = doc.data();
                 console.log(productDetails.value);
             });
-
             if (!productDetails.value) {
                 console.log("No such document!");
             }
         });
 
-        const filteredProductDetails = computed(() => {
-            if (!productDetails.value) return {};
-            let otherDetails = { ...productDetails.value };
-            delete otherDetails.image;
-            delete otherDetails.name;
-            delete otherDetails.price;
-            return otherDetails;
-        });
-
-        const labels = {
-            'core-count': 'Liczba rdzeni',
-            'socket': 'Socket',
-            'tdp': 'TDP',
-            'mtp': 'MTP',
-            'base-clock': 'Taktowanie bazowe',
-            'boost-clock': 'Taktowanie turbo',
-            'manufacturer': 'Producent',
-            'water-cooled': 'Chłodzenie wodne',
-            'max-noise': 'Maksymalny poziom hałasu',
-            'max-rpm': 'Maksymalna prędkość obrotowa',
-            'form-factor': 'Standard płyty',
-            'memory-type': 'Typ pamięci RAM',
-            'type': 'Typ pamięci RAM',
-            'latency': 'Opóźnienie',
-            'speed': 'Częstotliwość',
-            'modules': 'Moduły',
-            'total-memory': 'Pojemność',
-            'interface': 'Interfejs',
-            'capacity': 'Pojemność',
-            'memory': 'Pamięć',
-            'chipset': 'Chipset',
-            'core-clock': 'Taktowanie rdzenia',
-            'color': 'Kolor',
-            'motherboard-form-factor': 'Standard płyty głównej',
-            'wattage': 'Moc zasilacza',
-            'efficiency-rating': 'Cerfyfikat sprawności',
-            'case-type': 'Typ obudowy',
-            'memory-form-factor': 'Format',
-            'gpu-memory-type': 'Rodzaj pamięci',
-            'psu-type': 'Standard',
-        }
-
-        const valueLabels = {
-            'true': 'Tak',
-            'false': 'Nie'
-        }
-
-        const orderOfKeys = ['manufacturer', 'core-count', 'socket', 'tdp', 'mtp', 'base-clock', 'boost-clock', 'water-cooled', 'max-noise', 'max-rpm', 'form-factor', 'memory-type', 'type', 'latency', 'speed', 'modules', 'total-memory', 'interface', 'gpu-memory-type', 'capacity', 'memory', 'case-type', 'chipset', 'core-clock', 'color', 'motherboard-form-factor', 'psu-type', 'wattage', 'efficiency-rating', 'memory-form-factor'];
-
         const filteredProductDetailsArray = computed(() => {
-            return Object.entries(filteredProductDetails.value)
-                .sort(([keyA], [keyB]) => orderOfKeys.indexOf(keyA) - orderOfKeys.indexOf(keyB))
-                .map(([key, value]) => ({
-                    key: labels[key] || key,
-                    value: valueLabels[String(value)] || value
-                }));
+            return Object.entries(productDetails.value)
+                .filter(([key]) => key !== 'image' && key !== 'name' && key !== 'price')
+                .map(([key, value]) => {
+                    const translatedValue = value === true || value === false ? t(`values.${value.toString()}`) : value;
+                    return {
+                        key: t(`labels.${key}`),
+                        value: translatedValue
+                    };
+                });
         });
 
         return {
-            labels,
-            valueLabels,
             productDetails,
-            filteredProductDetails,
             filteredProductDetailsArray
         };
     },
     methods: {
         formatPrice(price) {
-            return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(price);
+            return new Intl.NumberFormat(this.$i18n.locale, { style: 'currency', currency: 'PLN' }).format(price);
         }
     }
 };

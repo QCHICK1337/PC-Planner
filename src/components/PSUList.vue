@@ -1,5 +1,5 @@
 <template>
-    <h2 class="text-center my-4 my-md-5">Wybierz zasilacz</h2>
+    <h2 class="text-center my-4 my-md-5">{{ $t('labels.selectPsu') }}</h2>
     <b-container fluid>
         <b-row>
             <b-col cols="12" md="2">
@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import { reactive, onMounted, computed } from 'vue';
 import ComponentList from './ComponentList.vue';
 import FilterSidebar from './FilterSidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -29,6 +30,7 @@ export default {
         FilterSidebar,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const state = reactive({
@@ -45,25 +47,25 @@ export default {
         const filters = reactive([
             {
                 name: 'Manufacturer',
-                label: 'Producent',
+                label: t('labels.manufacturer'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Wattage',
-                label: 'Moc',
+                label: t('labels.wattage'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Efficiency-Rating',
-                label: 'Efektywność',
+                label: t('labels.efficiency-rating'),
                 options: [],
                 selectedOptions: [],
             },
             {
                 name: 'Psu-Type',
-                label: 'Typ zasilacza',
+                label: t('labels.psu-type'),
                 options: [],
                 selectedOptions: [],
             },
@@ -121,9 +123,9 @@ export default {
         return {
             fields: [
                 { key: 'image', sortable: false, label: '' },
-                { key: 'name', sortable: true, label: 'Nazwa' },
-                { key: 'wattage', sortable: true, label: 'Moc' },
-                { key: 'price', sortable: true, label: 'Cena' },
+                { key: 'name', sortable: true, label: this.$t('labels.name') },
+                { key: 'wattage', sortable: true, label: this.$t('labels.wattage') },
+                { key: 'price', sortable: true, label: this.$t('labels.price') },
                 { key: 'add', label: '' },
             ],
             filterCategories: [],
