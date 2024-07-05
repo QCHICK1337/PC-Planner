@@ -16,15 +16,16 @@
             {{ formatPrice(data.item.price) }}
         </template>
         <template #cell(add)="data">
-            <b-button variant="primary" @click.stop="addItem(data.item)">Dodaj</b-button>
+            <b-button variant="primary" @click.stop="addItem(data.item)">{{ t('productDetails.add') }}</b-button>
         </template>
     </b-table>
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 export default {
     props: {
@@ -36,73 +37,27 @@ export default {
         sortDesc: Boolean,
         itemType: String,
     },
-
     emits: ['selectItem'],
-
     setup(props, { emit }) {
+        const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
         const localIsCollapsed = ref(props.isCollapsed);
         const localSortBy = ref(props.sortBy);
         const localSortDesc = ref(props.sortDesc);
-
         const selectItem = (item) => {
-            console.log(item);
+            emit('selectItem', item);
         };
-
         const addItem = (item) => {
-            if (props.itemType === 'cpu') {
-                store.dispatch('selectCpu', item);
-            } else if (props.itemType === 'cooler') {
-                store.dispatch('selectCooler', item);
-            }
-            else if (props.itemType === 'motherboard') {
-                store.dispatch('selectMotherboard', item);
-            }
-            else if (props.itemType === 'ram') {
-                store.dispatch('selectRAM', item);
-            }
-            else if (props.itemType === 'storage') {
-                store.dispatch('selectStorage', item);
-            }
-            else if (props.itemType === 'gpu') {
-                store.dispatch('selectGPU', item);
-            }
-            else if (props.itemType === 'case') {
-                store.dispatch('selectCase', item);
-            }
-            else if (props.itemType === 'psu') {
-                store.dispatch('selectPSU', item);
-            }
-            router.push('/configurator');
+            store.dispatch('cart/addItem', item);
+            router.push('/cart');
         };
-
         const sortNumericFields = (a, b, key) => {
-            if (key === 'name') {
-                return props.sortDesc ? b[key].localeCompare(a[key]) : a[key].localeCompare(b[key]);
-            }
-            if (!isNaN(a[key]) && !isNaN(b[key])) {
-                return props.sortDesc ? b[key] - a[key] : a[key] - b[key];
-            }
-            return a[key] > b[key] ? 1 : (a[key] < b[key] ? -1 : 0);
+            return a[key] - b[key];
         };
-
         const formatPrice = (price) => {
-            return price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
+            return `$${price.toFixed(2)}`;
         };
-
-        watch(localIsCollapsed, (newVal) => {
-            emit('update:isCollapsed', newVal);
-        });
-
-        watch(localSortBy, (newVal) => {
-            emit('update:sortBy', newVal);
-        });
-
-        watch(localSortDesc, (newVal) => {
-            emit('update:sortDesc', newVal);
-        });
-
         return {
             selectItem,
             localIsCollapsed,
@@ -111,9 +66,8 @@ export default {
             addItem,
             formatPrice,
             sortNumericFields,
+            t,
         };
-
-
     },
 };
 </script>

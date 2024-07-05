@@ -9,12 +9,28 @@
         "price": "{price}",
         "description": "Opis",
         "specifications": "Specyfikacje",
-        "addToCart": "Dodaj do koszyka"
+        "add": "Dodaj"
     },
     "labels": {
         "name": "Nazwa",
         "price": "Cena",
+        "filters": "Filtry",
         "selectCase": "Wybierz obudowę",
+        "selectMotherboard": "Wybierz płytę główną",
+        "selectCpu": "Wybierz procesor",
+        "selectGpu": "Wybierz kartę graficzną",
+        "selectRam": "Wybierz pamięć RAM",
+        "selectStorage": "Wybierz pamięć masową",
+        "selectPsu": "Wybierz zasilacz",
+        "selectCooler": "Wybierz chłodzenie",
+        "cpu": "Procesor",
+        "gpu": "Karta graficzna",
+        "ram": "Pamięć RAM",
+        "motherboard": "Płyta główna",
+        "storage": "Pamięć masowa",
+        "psu": "Zasilacz",
+        "cooler": "Chłodzenie",
+        "case": "Obudowa",
         "core-count": "Liczba rdzeni",
         "socket": "Gniazdo",
         "tdp": "TDP",
@@ -49,6 +65,20 @@
         "core-clock": "Taktowanie rdzenia",
         "memory": "Pamięć",
         "gpu-memory-type": "Typ pamięci GPU"
+    },
+    "configurator": {
+        "title": "Zbuduj swój komputer",
+        "addButton": "Dodaj",
+        "changeButton": "Zmień",
+        "removeButton": "Usuń",
+        "optionalComponent": "Komponent opcjonalny",
+        "estimatedPower": "Szacowana moc",
+        "totalPrice": "Całkowity koszt",
+        "errors": {
+            "cpuMotherboardCompatibility": "Wybrany procesor nie jest kompatybilny z wybraną płytą główną.",
+            "ramMotherboardCompatibility": "Wybrana pamięć RAM nie jest kompatybilna z wybraną płytą główną.",
+            "motherboardCaseCompatibility": "Wybrana płyta główna nie pasuje do wybranej obudowy."
+        }
     },
     "values": {
         "true": "Tak",

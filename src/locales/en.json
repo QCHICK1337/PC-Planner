@@ -8,11 +8,12 @@
         "price": "{price}",
         "description": "Description",
         "specifications": "Specifications",
-        "addToCart": "Add to Cart"
+        "add": "Add"
     },
     "labels": {
         "name": "Name",
         "price": "Price",
+        "filters": "Filters",
         "selectCase": "Select a Case",
         "selectMotherboard": "Select a Motherboard",
         "selectCpu": "Select a CPU",
@@ -21,6 +22,14 @@
         "selectStorage": "Select Storage",
         "selectPsu": "Select a PSU",
         "selectCooler": "Select a Cooler",
+        "cpu": "CPU",
+        "gpu": "GPU",
+        "ram": "RAM",
+        "motherboard": "Motherboard",
+        "storage": "Storage",
+        "psu": "Power Supply",
+        "cooler": "Cooler",
+        "case": "Case",
         "core-count": "Core Count",
         "socket": "Socket",
         "tdp": "TDP",
@@ -55,6 +64,20 @@
         "core-clock": "Core Clock",
         "memory": "Memory",
         "gpu-memory-type": "Memory Type"
+    },
+    "configurator": {
+        "title": "Build Your PC",
+        "addButton": "Add",
+        "changeButton": "Change",
+        "removeButton": "Remove",
+        "optionalComponent": "Optional Component",
+        "estimatedPower": "Estimated Power",
+        "totalPrice": "Total Price",
+        "errors": {
+            "cpuMotherboardCompatibility": "CPU and Motherboard are not compatible.",
+            "ramMotherboardCompatibility": "RAM and Motherboard are not compatible.",
+            "motherboardCaseCompatibility": "Motherboard and Case are not compatible."
+        }
     },
     "values": {
         "true": "Yes",

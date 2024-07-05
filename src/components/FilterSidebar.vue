@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h4 v-show="isDesktop">Filtry</h4>
+    <h4 v-show="isDesktop">{{ $t('labels.filters') }}</h4>
     <b-button v-b-toggle="'collapse-filters'" class="mb-2" variant="primary" v-show="!isDesktop"><font-awesome-icon
-        icon="filter" /> Filtry</b-button>
+        icon="filter" /> {{ $t('labels.filters') }}</b-button>
     <b-collapse id="collapse-filters" v-model="isCollapseVisible">
       <div class="filter-grid">
         <b-form-group :label="filter.label" v-for="filter in filters" :key="filter.name" class="filter-group">
@@ -19,14 +19,19 @@
     </b-collapse>
   </div>
 </template>
-
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   props: {
     filters: {
       type: Array,
       required: true,
     },
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -65,7 +70,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .filter-grid {
   display: grid;
