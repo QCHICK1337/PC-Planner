@@ -1,19 +1,19 @@
 <template>
     <div class="container mt-4">
-        <h2 class="text-center my-4 my-md-5">Konfigurator</h2>
+        <h2 class="text-center my-4 my-md-5">{{ $t('configurator.title') }}</h2>
         <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
-            <font-awesome-icon icon="triangle-exclamation" /> {{ error }}
+            <font-awesome-icon icon="triangle-exclamation" /> {{ $t(error) }}
         </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-6 col-lg-3 mb-4">
                 <BCard class="d-flex flex-column flex-grow-1" style="max-width: 30rem; margin: 0 auto;">
                     <template v-slot:header>
                         <div class="d-flex align-items-center">
-                            <div>{{ card.title }}&nbsp;</div>
+                            <div>{{ $t(card.title) }}&nbsp;</div>
                             <div v-if="card.id === 6">
                                 <font-awesome-icon icon="info-circle" class="text-muted" id="tooltip-target" />
                                 <b-tooltip target="tooltip-target" variant="primary">
-                                    Komponent opcjonalny
+                                    {{ $t('configurator.optionalComponent') }}
                                 </b-tooltip>
                             </div>
                         </div>
@@ -27,34 +27,36 @@
                                 <div>
                                     {{ getSelectedData(card.id).name }}
                                     <small class="text-muted d-block">{{ formatPrice(getSelectedData(card.id).price)
-                                    }}</small>
+                                        }}</small>
                                 </div>
                             </router-link>
                         </template>
                     </BCardText>
                     <div v-if="!isSelected(card.id) && card.link" class="w-100 m-auto">
-                        <router-link :to="card.link" class="btn btn-primary w-100">Dodaj</router-link>
+                        <router-link :to="card.link" class="btn btn-primary w-100">{{ $t('configurator.addButton')
+                            }}</router-link>
                     </div>
                     <div v-else-if="isSelected(card.id) && card.link" class="w-100 m-auto d-flex">
                         <router-link :to="card.link" class="btn btn-primary w-50 no-wrap" style="margin-right: 5px;">
-                            Zmień
+                            {{ $t('configurator.changeButton') }}
                         </router-link>
                         <button @click="removeSelection(card.id)" class="btn btn-danger w-50 no-wrap"
                             style="margin-left: 5px;">
-                            Usuń
+                            {{ $t('configurator.removeButton') }}
                         </button>
                     </div>
                     <div v-else class="w-100 m-auto">
-                        <button class="btn btn-primary w-100">Dodaj</button>
+                        <button class="btn btn-primary w-100">{{ $t('configurator.addButton') }}</button>
                     </div>
                 </BCard>
             </div>
             <div class="row mt-2 mb-4">
                 <div class="col-12 text-left">
-                    <h5 class="mb-3"><font-awesome-icon icon="bolt" /> Szacowany pobór mocy: <span class="text-muted">{{
-                        estimatedPower }} W</span></h5>
-                    <h5><font-awesome-icon icon="receipt" /> Łączna cena: <span class="text-muted">{{ totalPrice }}</span>
-                    </h5>
+                    <h5 class="mb-3"><font-awesome-icon icon="bolt" /> {{ $t('configurator.estimatedPower') }}: <span
+                            class="text-muted">{{ estimatedPower }} W</span></h5>
+                    <h5><font-awesome-icon icon="receipt" /> {{ $t('configurator.totalPrice') }}: <span
+                            class="text-muted">{{
+                                totalPrice }}</span></h5>
                 </div>
             </div>
         </div>
@@ -65,6 +67,7 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { BCard, BCardText } from 'bootstrap-vue-next';
+import { useI18n } from 'vue-i18n';
 
 export default {
     components: {
@@ -72,6 +75,7 @@ export default {
         BCardText,
     },
     setup() {
+        const { t } = useI18n();
         const store = useStore();
         const selectedCpu = computed(() => store.state.selectedCpu);
         const selectedCooler = computed(() => store.state.selectedCooler);
@@ -81,7 +85,6 @@ export default {
         const selectedGPU = computed(() => store.state.selectedGPU);
         const selectedCase = computed(() => store.state.selectedCase);
         const selectedPSU = computed(() => store.state.selectedPSU);
-
         const isSelected = (id) => {
             switch (id) {
                 case 1: return selectedCpu.value !== null;
@@ -95,32 +98,26 @@ export default {
                 default: return false;
             }
         };
-
         const isCompatible = computed(() => {
             let errors = [];
-
             if (selectedCpu.value && selectedMotherboard.value) {
                 if (selectedCpu.value.socket !== selectedMotherboard.value.socket) {
-                    errors.push('Wybrany procesor i płyta główna nie są ze sobą kompatybilne. (Socket)');
+                    errors.push('configurator.errors.cpuMotherboardCompatibility');
                 }
             }
-
             if (selectedRAM.value && selectedMotherboard.value) {
                 if (selectedRAM.value.type !== selectedMotherboard.value['memory-type']) {
-                    errors.push('Wybrana pamięć RAM i płyta główna nie są ze sobą kompatybilne. (Typ RAM)');
+                    errors.push('configurator.errors.ramMotherboardCompatibility');
                 }
             }
-
             if (selectedMotherboard.value && selectedCase.value) {
                 const caseSupportedFormFactors = selectedCase.value['motherboard-form-factor'].split(', ');
                 if (!caseSupportedFormFactors.includes(selectedMotherboard.value['form-factor'])) {
-                    errors.push('Wybrana płyta główna i obudowa nie są ze sobą kompatybilne. (Standard płyty głównej)');
+                    errors.push('configurator.errors.motherboardCaseCompatibility');
                 }
             }
-
             return errors;
         });
-
         const totalPrice = computed(() => {
             let total = 0;
             if (selectedCpu.value) total += selectedCpu.value.price;
@@ -133,11 +130,9 @@ export default {
             if (selectedPSU.value) total += selectedPSU.value.price;
             return total.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł';
         });
-
         const formatPrice = (price) => {
             return price ? price.toLocaleString('pl-PL', { minimumFractionDigits: 2 }) + ' zł' : '';
         };
-
         const estimatedPower = computed(() => {
             let totalPower = 0;
             if (selectedCpu.value) totalPower += parseInt(selectedCpu.value.mtp);
@@ -148,7 +143,6 @@ export default {
             if (selectedStorage.value) totalPower += 10;
             return totalPower;
         });
-
         const removeSelection = (id) => {
             switch (id) {
                 case 1: store.dispatch('selectCpu', null); break;
@@ -161,7 +155,6 @@ export default {
                 case 8: store.dispatch('selectPSU', null); break;
             }
         };
-
         const getSelectedData = (id) => {
             switch (id) {
                 case 1: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image, price: selectedCpu.value.price } : { name: '', image: '', price: '' };
@@ -179,63 +172,57 @@ export default {
         const cards = ref([
             {
                 id: 1,
-                title: 'Procesor',
-                text: 'Wybierz produkt',
+                title: t('labels.cpu'),
+                text: t('configurator.selectProduct'),
                 link: '/products/cpu',
                 collection: 'cpu'
             },
             {
                 id: 2,
-                title: 'Chłodzenie',
-                text: 'Wybierz produkt',
+                title: t('labels.cooler'),
+                text: t('configurator.selectProduct'),
                 link: '/products/coolers',
                 collection: 'cooler'
-            }
-            ,
+            },
             {
                 id: 3,
-                title: 'Płyta główna',
-                text: 'Wybierz produkt',
+                title: t('labels.motherboard'),
+                text: t('configurator.selectProduct'),
                 link: '/products/motherboards',
                 collection: 'motherboard'
-            }
-            ,
+            },
             {
                 id: 4,
-                title: 'Pamięć RAM',
-                text: 'Wybierz produkt',
+                title: t('labels.ram'),
+                text: t('configurator.selectProduct'),
                 link: '/products/ram',
                 collection: 'ram'
-            }
-            ,
+            },
             {
                 id: 5,
-                title: 'Dysk',
-                text: 'Wybierz produkt',
+                title: t('labels.storage'),
+                text: t('configurator.selectProduct'),
                 link: '/products/storage',
                 collection: 'storage'
-            }
-            ,
+            },
             {
                 id: 6,
-                title: 'Karta graficzna',
-                text: 'Wybierz produkt',
+                title: t('labels.gpu'),
+                text: t('configurator.selectProduct'),
                 link: '/products/gpu',
                 collection: 'gpu'
-            }
-            ,
+            },
             {
                 id: 7,
-                title: 'Obudowa',
-                text: 'Wybierz produkt',
+                title: t('labels.case'),
+                text: t('configurator.selectProduct'),
                 link: '/products/cases',
                 collection: 'case'
-            }
-            ,
+            },
             {
                 id: 8,
-                title: 'Zasilacz',
-                text: 'Wybierz produkt',
+                title: t('labels.psu'),
+                text: t('configurator.selectProduct'),
                 link: '/products/psu',
                 collection: 'psu'
             }
@@ -260,6 +247,7 @@ export default {
             formatPrice,
             estimatedPower,
             removeSelection,
+            t,
             cards,
             addCard,
             removeCard,
