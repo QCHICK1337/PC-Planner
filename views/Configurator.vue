@@ -2,7 +2,7 @@
     <div class="container mt-4">
         <h2 class="text-center my-4 my-md-5">{{ $t('configurator.title') }}</h2>
         <div v-for="(error, index) in isCompatible" :key="index" class="alert alert-danger">
-            <font-awesome-icon icon="triangle-exclamation" /> {{ $t(error) }}
+            <font-awesome-icon icon="triangle-exclamation" /> {{ error }}
         </div>
         <div class="row d-flex flex-wrap">
             <div v-for="card in cards" :key="card.id" class="col-12 col-md-6 col-lg-3 mb-4">
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { BCard, BCardText } from 'bootstrap-vue-next';
 import { useI18n } from 'vue-i18n';
@@ -102,18 +102,18 @@ export default {
             let errors = [];
             if (selectedCpu.value && selectedMotherboard.value) {
                 if (selectedCpu.value.socket !== selectedMotherboard.value.socket) {
-                    errors.push('configurator.errors.cpuMotherboardCompatibility');
+                    errors.push(t('configurator.errors.cpuMotherboardCompatibility'));
                 }
             }
             if (selectedRAM.value && selectedMotherboard.value) {
                 if (selectedRAM.value.type !== selectedMotherboard.value['memory-type']) {
-                    errors.push('configurator.errors.ramMotherboardCompatibility');
+                    errors.push(t('configurator.errors.ramMotherboardCompatibility'));
                 }
             }
             if (selectedMotherboard.value && selectedCase.value) {
                 const caseSupportedFormFactors = selectedCase.value['motherboard-form-factor'].split(', ');
                 if (!caseSupportedFormFactors.includes(selectedMotherboard.value['form-factor'])) {
-                    errors.push('configurator.errors.motherboardCaseCompatibility');
+                    errors.push(t('configurator.errors.motherboardCaseCompatibility'));
                 }
             }
             return errors;
@@ -169,7 +169,7 @@ export default {
             }
         };
 
-        const cards = ref([
+        const cards = computed(() => [
             {
                 id: 1,
                 title: t('labels.cpu'),
@@ -227,13 +227,6 @@ export default {
                 collection: 'psu'
             }
         ]);
-        const addCard = (card) => {
-            cards.value.push(card);
-        };
-
-        const removeCard = (id) => {
-            cards.value = cards.value.filter(card => card.id !== id);
-        };
 
         return {
             selectedCpu,
@@ -249,8 +242,6 @@ export default {
             removeSelection,
             t,
             cards,
-            addCard,
-            removeCard,
             getSelectedData
         };
     },
