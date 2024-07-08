@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '/views/Home.vue'
-import Configurator from '/views/Configurator.vue'
-import About from '/views/About.vue'
+import Home from './views/Home.vue'
+import Configurator from './views/Configurator.vue'
+import About from './views/About.vue'
 import Products from './views/Products.vue'
 import CPUList from './components/CPUList.vue'
 import CoolerList from './components/CoolerList.vue'
@@ -17,7 +17,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/configurator', component: Configurator },
   { path: '/about', component: About },
-  { 
+  {
     path: '/products', 
     component: Products,
     children: [
