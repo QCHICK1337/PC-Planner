@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -49,15 +49,54 @@ export default {
             emit('selectItem', item);
         };
         const addItem = (item) => {
-            store.dispatch('cart/addItem', item);
-            router.push('/cart');
+            if (props.itemType === 'cpu') {
+                store.dispatch('selectCpu', item);
+            } else if (props.itemType === 'cooler') {
+                store.dispatch('selectCooler', item);
+            }
+            else if (props.itemType === 'motherboard') {
+                store.dispatch('selectMotherboard', item);
+            }
+            else if (props.itemType === 'ram') {
+                store.dispatch('selectRAM', item);
+            }
+            else if (props.itemType === 'storage') {
+                store.dispatch('selectStorage', item);
+            }
+            else if (props.itemType === 'gpu') {
+                store.dispatch('selectGPU', item);
+            }
+            else if (props.itemType === 'case') {
+                store.dispatch('selectCase', item);
+            }
+            else if (props.itemType === 'psu') {
+                store.dispatch('selectPSU', item);
+            }
+            router.push('/configurator');
         };
         const sortNumericFields = (a, b, key) => {
-            return a[key] - b[key];
+            if (key === 'name') {
+                return props.sortDesc ? b[key].localeCompare(a[key]) : a[key].localeCompare(b[key]);
+            }
+            if (!isNaN(a[key]) && !isNaN(b[key])) {
+                return props.sortDesc ? b[key] - a[key] : a[key] - b[key];
+            }
+            return a[key] > b[key] ? 1 : (a[key] < b[key] ? -1 : 0);
         };
         const formatPrice = (price) => {
             return `$${price.toFixed(2)}`;
         };
+
+        watch(localIsCollapsed, (newVal) => {
+            emit('update:isCollapsed', newVal);
+        });
+        watch(localSortBy, (newVal) => {
+            emit('update:sortBy', newVal);
+        });
+        watch(localSortDesc, (newVal) => {
+            emit('update:sortDesc', newVal);
+        });
+
         return {
             selectItem,
             localIsCollapsed,
