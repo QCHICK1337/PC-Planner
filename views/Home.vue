@@ -1,9 +1,11 @@
 <template>
     <div class="hero-section">
         <div class="hero-content">
-            <h1 class="display-4"><b>PC PLANNER</b></h1>
-            <p class="lead">Skonfiguruj idealny komputer.</p>
-            <b-button variant="primary" size="lg" @click="$router.push('/configurator')"><font-awesome-icon icon="screwdriver-wrench" /> Rozpocznij konfigurację</b-button>
+            <h1 class="display-4"><b>{{ $t("hero.title") }}</b></h1>
+            <p class="lead">{{ $t("hero.subtitle") }}</p>
+            <b-button variant="primary" size="lg" @click="$router.push('/configurator')">
+                <font-awesome-icon icon="screwdriver-wrench" /> {{ $t("hero.buttonText") }}
+            </b-button>
         </div>
     </div>
 </template>
@@ -26,13 +28,13 @@ export default {
     align-items: center;
     height: 100vh;
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .hero-section::before {
     content: "";
     position: absolute;
-    top: -10%; 
+    top: -10%;
     right: -10%;
     bottom: -10%;
     left: -10%;
@@ -47,15 +49,17 @@ export default {
     text-align: center;
 }
 
-.hero-content h1 {
-    color: white;
-}
-
+.hero-content h1,
 .hero-content p {
     color: white;
 }
 
 .b-button {
     margin-top: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.b-button:hover {
+    transform: scale(1.05);
 }
 </style>
