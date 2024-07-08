@@ -9,9 +9,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart, faTriangleExclamation, faComputer, faScrewdriverWrench, faFilter, faBolt, faReceipt, faCodeBranch, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createI18n } from 'vue-i18n'
-
 import en from './locales/en.json'
 import pl from './locales/pl.json'
+import "/node_modules/flag-icons/css/flag-icons.min.css"
 
 library.add(faHeart, faTriangleExclamation, faComputer, faScrewdriverWrench, faFilter, faBolt, faReceipt, faCodeBranch, faInfoCircle)
 

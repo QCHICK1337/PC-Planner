@@ -2,7 +2,7 @@
     "menu": {
         "configurator": "Konfigurator",
         "about": "Informacje",
-        "selectCase": "Wybierz obudowę"
+        "language": "PL"
     },
     "productDetails": {
         "name": "{name}",
