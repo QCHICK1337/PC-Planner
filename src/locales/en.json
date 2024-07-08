@@ -4,6 +4,22 @@
         "about": "About",
         "language": "EN"
     },
+    "hero": {
+        "title": "PC PLANNER",
+        "subtitle": "Configure your ideal computer.",
+        "buttonText": "Start Configuration"
+    }, 
+    "about": {
+        "title": "About PC Planner",
+        "subtitle": "Create the perfect computer setup",
+        "description": "PC Planner is an online tool that helps computer enthusiasts and builders create the ideal PC configurations. Whether you're a beginner or an experienced builder, PC Planner simplifies the process by guiding you through component selection, compatibility checking, and cost estimation.",
+        "features": "Features",
+        "featureList": {
+          "componentSelection": "Component Selection: Choose from a wide range of processors, graphics cards, motherboards, RAM, drives, and more.",
+          "compatibilityCheck": "Compatibility Check: PC-Planner automatically checks component compatibility to prevent common issues.",
+          "costEstimation": "Cost Estimation: Get an estimated total cost of your configuration as you add components."
+        }
+    }, 
     "productDetails": {
         "name": "{name}",
         "price": "{price}",
