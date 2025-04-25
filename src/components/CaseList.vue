@@ -41,7 +41,7 @@ export default {
         });
         const selectCase = (caseItem) => {
             store.dispatch('selectCase', caseItem);
-            router.push({ name: 'Configurator', params: { cardId: 'cases' } });
+            router.push({ name: 'Configurator' });
         };
         const filters = reactive([
             {

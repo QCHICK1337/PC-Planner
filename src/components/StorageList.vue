@@ -41,7 +41,7 @@ export default {
         });
         const selectStorage = (storage) => {
             store.dispatch('selectStorage', storage);
-            router.push({ name: 'Configurator', params: { cardId: 'storages' } });
+            router.push({ name: 'Configurator' });
         };
 
         const filters = reactive([

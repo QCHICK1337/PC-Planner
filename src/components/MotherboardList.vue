@@ -41,7 +41,7 @@ export default {
         });
         const selectMotherboard = (motherboard) => {
             store.dispatch('selectMotherboard', motherboard);
-            router.push({ name: 'Configurator', params: { cardId: 'motherboards' } });
+            router.push({ name: 'Configurator' });
         };
 
         const filters = reactive([

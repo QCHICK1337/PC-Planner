@@ -41,7 +41,7 @@ export default {
         });
         const selectGpu = (gpu) => {
             store.dispatch('selectGpu', gpu);
-            router.push({ name: 'Configurator', params: { cardId: 'gpus' } });
+            router.push({ name: 'Configurator' });
         };
 
         const filters = reactive([

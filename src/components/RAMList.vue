@@ -41,7 +41,7 @@ export default {
         });
         const selectRAM = (ram) => {
             store.dispatch('selectRAM', ram);
-            router.push({ name: 'Configurator', params: { cardId: 'ram' } });
+            router.push({ name: 'Configurator' });
         };
 
         const filters = reactive([

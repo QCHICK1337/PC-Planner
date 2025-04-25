@@ -41,7 +41,7 @@ export default {
         });
         const selectCpu = (cpu) => {
             store.dispatch('selectCpu', cpu);
-            router.push({ name: 'Configurator', params: { cardId: 'cpus' } });
+            router.push({ name: 'Configurator' });
         };
 
         const selectedManufacturers = ref([]);

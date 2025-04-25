@@ -85,16 +85,26 @@ export default {
         const selectedGPU = computed(() => store.state.selectedGPU);
         const selectedCase = computed(() => store.state.selectedCase);
         const selectedPSU = computed(() => store.state.selectedPSU);
+        const COMPONENT_IDS = {
+            CPU: 1,
+            COOLER: 2,
+            MOTHERBOARD: 3,
+            RAM: 4,
+            STORAGE: 5,
+            GPU: 6,
+            CASE: 7,
+            PSU: 8
+        };
         const isSelected = (id) => {
             switch (id) {
-                case 1: return selectedCpu.value !== null;
-                case 2: return selectedCooler.value !== null;
-                case 3: return selectedMotherboard.value !== null;
-                case 4: return selectedRAM.value !== null;
-                case 5: return selectedStorage.value !== null;
-                case 6: return selectedGPU.value !== null;
-                case 7: return selectedCase.value !== null;
-                case 8: return selectedPSU.value !== null;
+                case COMPONENT_IDS.CPU: return selectedCpu.value !== null;
+                case COMPONENT_IDS.COOLER: return selectedCooler.value !== null;
+                case COMPONENT_IDS.MOTHERBOARD: return selectedMotherboard.value !== null;
+                case COMPONENT_IDS.RAM: return selectedRAM.value !== null;
+                case COMPONENT_IDS.STORAGE: return selectedStorage.value !== null;
+                case COMPONENT_IDS.GPU: return selectedGPU.value !== null;
+                case COMPONENT_IDS.CASE: return selectedCase.value !== null;
+                case COMPONENT_IDS.PSU: return selectedPSU.value !== null;
                 default: return false;
             }
         };
@@ -145,33 +155,33 @@ export default {
         });
         const removeSelection = (id) => {
             switch (id) {
-                case 1: store.dispatch('selectCpu', null); break;
-                case 2: store.dispatch('selectCooler', null); break;
-                case 3: store.dispatch('selectMotherboard', null); break;
-                case 4: store.dispatch('selectRAM', null); break;
-                case 5: store.dispatch('selectStorage', null); break;
-                case 6: store.dispatch('selectGPU', null); break;
-                case 7: store.dispatch('selectCase', null); break;
-                case 8: store.dispatch('selectPSU', null); break;
+                case COMPONENT_IDS.CPU: store.dispatch('selectCpu', null); break;
+                case COMPONENT_IDS.COOLER: store.dispatch('selectCooler', null); break;
+                case COMPONENT_IDS.MOTHERBOARD: store.dispatch('selectMotherboard', null); break;
+                case COMPONENT_IDS.RAM: store.dispatch('selectRAM', null); break;
+                case COMPONENT_IDS.STORAGE: store.dispatch('selectStorage', null); break;
+                case COMPONENT_IDS.GPU: store.dispatch('selectGPU', null); break;
+                case COMPONENT_IDS.CASE: store.dispatch('selectCase', null); break;
+                case COMPONENT_IDS.PSU: store.dispatch('selectPSU', null); break;
             }
         };
         const getSelectedData = (id) => {
             switch (id) {
-                case 1: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image, price: selectedCpu.value.price } : { name: '', image: '', price: '' };
-                case 2: return selectedCooler.value ? { name: selectedCooler.value.name, image: selectedCooler.value.image, price: selectedCooler.value.price } : { name: '', image: '', price: '' };
-                case 3: return selectedMotherboard.value ? { name: selectedMotherboard.value.name, image: selectedMotherboard.value.image, price: selectedMotherboard.value.price } : { name: '', image: '', price: '' };
-                case 4: return selectedRAM.value ? { name: selectedRAM.value.name, image: selectedRAM.value.image, price: selectedRAM.value.price } : { name: '', image: '', price: '' };
-                case 5: return selectedStorage.value ? { name: selectedStorage.value.name, image: selectedStorage.value.image, price: selectedStorage.value.price } : { name: '', image: '', price: '' };
-                case 6: return selectedGPU.value ? { name: selectedGPU.value.name, image: selectedGPU.value.image, price: selectedGPU.value.price } : { name: '', image: '', price: '' };
-                case 7: return selectedCase.value ? { name: selectedCase.value.name, image: selectedCase.value.image, price: selectedCase.value.price } : { name: '', image: '', price: '' };
-                case 8: return selectedPSU.value ? { name: selectedPSU.value.name, image: selectedPSU.value.image, price: selectedPSU.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.CPU: return selectedCpu.value ? { name: selectedCpu.value.name, image: selectedCpu.value.image, price: selectedCpu.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.COOLER: return selectedCooler.value ? { name: selectedCooler.value.name, image: selectedCooler.value.image, price: selectedCooler.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.MOTHERBOARD: return selectedMotherboard.value ? { name: selectedMotherboard.value.name, image: selectedMotherboard.value.image, price: selectedMotherboard.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.RAM: return selectedRAM.value ? { name: selectedRAM.value.name, image: selectedRAM.value.image, price: selectedRAM.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.STORAGE: return selectedStorage.value ? { name: selectedStorage.value.name, image: selectedStorage.value.image, price: selectedStorage.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.GPU: return selectedGPU.value ? { name: selectedGPU.value.name, image: selectedGPU.value.image, price: selectedGPU.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.CASE: return selectedCase.value ? { name: selectedCase.value.name, image: selectedCase.value.image, price: selectedCase.value.price } : { name: '', image: '', price: '' };
+                case COMPONENT_IDS.PSU: return selectedPSU.value ? { name: selectedPSU.value.name, image: selectedPSU.value.image, price: selectedPSU.value.price } : { name: '', image: '', price: '' };
                 default: return { name: '', image: '', price: '' };
             }
         };
 
         const cards = computed(() => [
             {
-                id: 1,
+                id: COMPONENT_IDS.CPU,
                 title: t('labels.cpu'),
                 text: t('configurator.selectProduct'),
                 link: '/products/cpu',

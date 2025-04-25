@@ -40,17 +40,24 @@ export default {
         const name = route.params.name;
         const collectionName = route.params.collection;
         const productDetails = ref(null);
+        const errorMessage = ref("");
         const { t } = useI18n();
 
         onMounted(async () => {
-            const q = query(collection(db, collectionName), where('name', '==', name));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                productDetails.value = doc.data();
-                console.log(productDetails.value);
-            });
-            if (!productDetails.value) {
-                console.log("No such document!");
+            try {
+                const q = query(collection(db, collectionName), where('name', '==', name));
+                const querySnapshot = await getDocs(q);
+                let found = false;
+                querySnapshot.forEach((doc) => {
+                    productDetails.value = doc.data();
+                    found = true;
+                });
+                if (!found) {
+                    errorMessage.value = t('productDetails.notFound', { name });
+                }
+            } catch (error) {
+                errorMessage.value = t('productDetails.loadError');
+                // Optionally, log error or report to monitoring
             }
         });
 
@@ -68,7 +75,8 @@ export default {
 
         return {
             productDetails,
-            filteredProductDetailsArray
+            filteredProductDetailsArray,
+            errorMessage
         };
     },
     methods: {

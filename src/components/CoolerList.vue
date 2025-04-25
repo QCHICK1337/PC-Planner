@@ -41,7 +41,7 @@ export default {
         });
         const selectCooler = (cooler) => {
             store.dispatch('selectCooler', cooler);
-            router.push({ name: 'Configurator', params: { cardId: 'coolers' } });
+            router.push({ name: 'Configurator' });
         };
         const filters = reactive([
             {

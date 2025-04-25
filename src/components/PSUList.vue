@@ -41,7 +41,7 @@ export default {
         });
         const selectPsu = (psu) => {
             store.dispatch('selectPsu', psu);
-            router.push({ name: 'Configurator', params: { cardId: 'psus' } });
+            router.push({ name: 'Configurator' });
         };
 
         const filters = reactive([
