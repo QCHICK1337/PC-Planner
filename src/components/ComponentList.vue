@@ -31,8 +31,6 @@ export default {
     props: {
         items: Array,
         fields: Array,
-        filterCategories: Array,
-        isCollapsed: Boolean,
         sortBy: String,
         sortDesc: Boolean,
         itemType: String,
@@ -42,35 +40,32 @@ export default {
         const { t } = useI18n();
         const store = useStore();
         const router = useRouter();
-        const localIsCollapsed = ref(props.isCollapsed);
+
         const localSortBy = ref(props.sortBy);
         const localSortDesc = ref(props.sortDesc);
         const selectItem = (item) => {
             emit('selectItem', item);
         };
-        const addItem = (item) => {
-            if (props.itemType === 'cpu') {
-                store.dispatch('selectCpu', item);
-            } else if (props.itemType === 'cooler') {
-                store.dispatch('selectCooler', item);
-            }
-            else if (props.itemType === 'motherboard') {
-                store.dispatch('selectMotherboard', item);
-            }
-            else if (props.itemType === 'ram') {
-                store.dispatch('selectRAM', item);
-            }
-            else if (props.itemType === 'storage') {
-                store.dispatch('selectStorage', item);
-            }
-            else if (props.itemType === 'gpu') {
-                store.dispatch('selectGPU', item);
-            }
-            else if (props.itemType === 'case') {
-                store.dispatch('selectCase', item);
-            }
-            else if (props.itemType === 'psu') {
-                store.dispatch('selectPSU', item);
+        const addItem = async (item) => {
+            const typeToAction = {
+                cpu: 'selectCpu',
+                cooler: 'selectCooler',
+                motherboard: 'selectMotherboard',
+                ram: 'selectRAM',
+                storage: 'selectStorage',
+                gpu: 'selectGPU',
+                case: 'selectCase',
+                psu: 'selectPSU',
+            };
+            const action = typeToAction[props.itemType];
+            if (action) {
+                try {
+                    await store.dispatch(action, item);
+                } catch (error) {
+                    console.error(`Failed to dispatch ${action}:`, error);
+                }
+            } else {
+                console.warn('Unknown itemType:', props.itemType);
             }
             router.push('/configurator');
         };
@@ -87,9 +82,7 @@ export default {
             return `$${price.toFixed(2)}`;
         };
 
-        watch(localIsCollapsed, (newVal) => {
-            emit('update:isCollapsed', newVal);
-        });
+
         watch(localSortBy, (newVal) => {
             emit('update:sortBy', newVal);
         });
@@ -99,7 +92,7 @@ export default {
 
         return {
             selectItem,
-            localIsCollapsed,
+
             localSortBy,
             localSortDesc,
             addItem,

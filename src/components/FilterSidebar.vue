@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export default {
@@ -29,44 +30,55 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props, { emit }) {
     const { t } = useI18n();
-    return { t };
-  },
-  data() {
-    return {
-      isDesktop: window.innerWidth >= 768,
-      isCollapseVisible: window.innerWidth >= 768,
-    };
-  },
-  created() {
-    window.addEventListener('resize', this.updateIsDesktop);
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.updateIsDesktop);
-  },
-  methods: {
-    updateIsDesktop() {
+    const isDesktop = ref(window.innerWidth >= 768);
+    const isCollapseVisible = ref(window.innerWidth >= 768);
+    let resizeTimeout = null;
+
+    const updateIsDesktop = () => {
       const isDesktopNow = window.innerWidth >= 768;
-      this.isDesktop = isDesktopNow;
-      this.isCollapseVisible = isDesktopNow;
-    },
-    getOptionLabel(option, filterName) {
+      isDesktop.value = isDesktopNow;
+      isCollapseVisible.value = isDesktopNow;
+    };
+
+    // Debounce resize handler
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateIsDesktop, 100);
+    };
+
+    onMounted(() => {
+      window.addEventListener('resize', handleResize);
+    });
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    });
+
+    const getOptionLabel = (option, filterName) => {
       if (filterName === 'Water-Cooled') {
         return option ? 'Yes' : 'No';
       }
       return option;
-    },
-  },
-  watch: {
-    filters: {
-      handler(newVal) {
+    };
+
+    watch(
+      () => props.filters,
+      (newVal) => {
         newVal.forEach(filter => {
-          this.$emit('filter-change', filter.name, filter.selectedOptions);
+          emit('filter-change', filter.name, filter.selectedOptions);
         });
       },
-      deep: true,
-    },
+      { deep: true }
+    );
+
+    return {
+      t,
+      isDesktop,
+      isCollapseVisible,
+      getOptionLabel,
+    };
   },
 };
 </script>
